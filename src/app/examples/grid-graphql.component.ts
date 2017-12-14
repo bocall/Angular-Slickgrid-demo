@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Injectable, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
 import { CaseType, Column, FieldType, Formatters, FormElementType, GraphqlService, GridOption } from 'angular-slickgrid';
 import { HttpClient } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 const defaultPageSize = 20;
 const sampleDataRoot = '/assets/data';
@@ -33,30 +34,37 @@ export class GridGraphqlComponent implements OnInit {
   processing = false;
   status = { text: '', class: '' };
   isWithCursor = false;
+  selectedLanguage: string;
 
-  constructor(private http: HttpClient, private graphqlService: GraphqlService) {
+  constructor(private http: HttpClient, private graphqlService: GraphqlService, private translate: TranslateService) {
+    this.selectedLanguage = this.translate.getDefaultLang();
   }
 
   ngOnInit(): void {
     this.columnDefinitions = [
-      { id: 'name', name: 'Name', field: 'name', filterable: true, sortable: true, type: FieldType.string, minWidth: 100 },
-      { id: 'gender', name: 'Gender', field: 'gender', filterable: true, sortable: true, minWidth: 100,
+      { id: 'name', name: 'Name', field: 'name', headerKey: 'NAME', filterable: true, sortable: true, type: FieldType.string },
+      { id: 'gender', name: 'Gender', field: 'gender', headerKey: 'GENDER', filterable: true, sortable: true,
         filter: {
           searchTerm: '', // default selection
           type: FormElementType.select,
           selectOptions: [ { value: '', label: '' }, { value: 'male', label: 'male' }, { value: 'female', label: 'female' } ]
         }
       },
-      { id: 'company', name: 'Company', field: 'company', filterable: true },
-      { id: 'billing.address.street', name: 'Billing Address Street', field: 'billing.address.street', filterable: true, sortable: true },
-      { id: 'billing.address.zip', name: 'Billing Address Zip', field: 'billing.address.zip', filterable: true, sortable: true },
+      { id: 'company', name: 'Company', field: 'company', headerKey: 'COMPANY', filterable: true },
+      { id: 'billing.address.street', name: 'Billing Address Street', field: 'billing.address.street', headerKey: 'BILLING.ADDRESS.STREET', filterable: true, sortable: true },
+      { id: 'billing.address.zip', name: 'Billing Address Zip', field: 'billing.address.zip', headerKey: 'BILLING.ADDRESS.ZIP', filterable: true, sortable: true },
     ];
 
     this.gridOptions = {
-      enableAutoResize: false,
+      enableAutoResize: true,
+      autoResize: {
+        containerId: 'demo-container',
+        sidePadding: 15
+      },
       enableFiltering: true,
       enableCellNavigation: true,
       enablePagination: true,
+      enableTranslate: true,
       pagination: {
         pageSizes: [10, 15, 20, 25, 30, 40, 50, 75, 100],
         pageSize: defaultPageSize,
@@ -153,5 +161,10 @@ export class GridGraphqlComponent implements OnInit {
         resolve({ items: [], totalRecordCount: 100, query });
       }, 500);
     });
+  }
+
+  switchLanguage() {
+    this.selectedLanguage = (this.selectedLanguage === 'en') ? 'fr' : 'en';
+    this.translate.use(this.selectedLanguage);
   }
 }
