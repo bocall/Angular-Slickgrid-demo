@@ -139,6 +139,11 @@ export class GridGraphqlComponent implements OnInit {
         }
       };
     }
+
+    // when dealing with complex objects, we want to keep our field name with double quotes
+    // example with gender: query { users (orderBy:[{field:"gender",direction:ASC}]) {}
+    paginationOption.keepArgumentFieldDoubleQuotes = true;
+
     return paginationOption;
   }
 
