@@ -112,16 +112,12 @@ export class GridGraphqlComponent implements OnInit {
 
   getPaginationOption(isWithCursor: boolean) {
     let paginationOption;
-    const columnIds = Array.isArray(this.columnDefinitions) ? this.columnDefinitions.map((column) => column.field) : [];
-
-    // Slickgrid also requires the "id" field
-    columnIds.push('id');
 
     if (isWithCursor) {
       // with cursor, paginationOptions can be: { first, last, after, before }
       paginationOption = {
+        columnDefinitions: this.columnDefinitions,
         datasetName: 'users',
-        dataFilters: columnIds,
         isWithCursor: true,
         paginationOptions: {
           first: defaultPageSize
@@ -130,8 +126,8 @@ export class GridGraphqlComponent implements OnInit {
     } else {
       // without cursor, paginationOptions can be: { first, last, offset }
       paginationOption = {
+        columnDefinitions: this.columnDefinitions,
         datasetName: 'users',
-        dataFilters: columnIds,
         isWithCursor: false,
         paginationOptions: {
           first: defaultPageSize,

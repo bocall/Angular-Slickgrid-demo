@@ -178,9 +178,17 @@
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-9.0.0.tgz#1fa86307e18b0e8ae4d437ac4f6801504605ff86"
 
+"@ngx-translate/core@^9.0.1":
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-9.0.2.tgz#d4cab861e3ea8ea14a6df5dcd744dfeb29fb15e2"
+
 "@ngx-translate/http-loader@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-2.0.0.tgz#9c16d07cd070c67ada270a2e940281eb826b3f43"
+
+"@ngx-translate/http-loader@^2.0.0":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-2.0.1.tgz#aa67788e64bfa8652691a77b022b3b4031209113"
 
 "@schematics/angular@~0.1.10":
   version "0.1.11"
@@ -317,10 +325,12 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-angular-slickgrid@^0.6.7:
-  version "0.6.7"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.6.7.tgz#dd058a5ae0dbaea2e3f771f832320880216bcf8c"
+angular-slickgrid@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.7.4.tgz#5030d6056cbd1cabd40d70485af4bf40019cee74"
   dependencies:
+    "@ngx-translate/core" "^9.0.1"
+    "@ngx-translate/http-loader" "^2.0.0"
     "@types/flatpickr" "^3.1.2"
     "@types/moment" "^2.13.0"
     bootstrap "^3.3.7"
@@ -5367,6 +5377,13 @@ slash@^1.0.0:
 slickgrid@^2.3.10:
   version "2.3.10"
   resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.10.tgz#d85a52b7f23078b71c37f4c1232b11885d1e1815"
+  dependencies:
+    jquery ">=1.8.0"
+    jquery-ui ">=1.8.0"
+
+slickgrid@^2.3.12:
+  version "2.3.12"
+  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.12.tgz#f509cd3e6f024371cd3d1fa7e991826466826f87"
   dependencies:
     jquery ">=1.8.0"
     jquery-ui ">=1.8.0"
