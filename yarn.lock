@@ -174,13 +174,9 @@
     source-map "^0.5.6"
     tree-kill "^1.0.0"
 
-"@ngx-translate/core@9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-9.0.0.tgz#1fa86307e18b0e8ae4d437ac4f6801504605ff86"
-
-"@ngx-translate/core@^9.0.1":
-  version "9.0.2"
-  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-9.0.2.tgz#d4cab861e3ea8ea14a6df5dcd744dfeb29fb15e2"
+"@ngx-translate/core@9.1.1", "@ngx-translate/core@^9.1.1":
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-9.1.1.tgz#ae103928836b8a9e069fd2e2e76fa2198cc7e628"
 
 "@ngx-translate/http-loader@2.0.0":
   version "2.0.0"
@@ -200,12 +196,6 @@
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/@schematics/schematics/-/schematics-0.0.11.tgz#c8f70f270ed38f29b2873248126fd59abd635862"
 
-"@types/flatpickr@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@types/flatpickr/-/flatpickr-3.1.2.tgz#767e04fea776ddb399007028bed1a885e26d6d52"
-  dependencies:
-    flatpickr "*"
-
 "@types/jasmine@*":
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.6.0.tgz#997b41a27752b4850af2683bc4a8d8222c25bd02"
@@ -219,12 +209,6 @@
   resolved "https://registry.yarnpkg.com/@types/jasminewd2/-/jasminewd2-2.0.3.tgz#0d2886b0cbdae4c0eeba55e30792f584bf040a95"
   dependencies:
     "@types/jasmine" "*"
-
-"@types/moment@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@types/moment/-/moment-2.13.0.tgz#604ebd189bc3bc34a1548689404e61a2a4aac896"
-  dependencies:
-    moment "*"
 
 "@types/node@^6.0.46", "@types/node@~6.0.60":
   version "6.0.89"
@@ -325,14 +309,12 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-angular-slickgrid@^0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.7.4.tgz#5030d6056cbd1cabd40d70485af4bf40019cee74"
+angular-slickgrid@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.8.0.tgz#a56fea0821ccd3a4419ed98f9af69efc07dc8c8a"
   dependencies:
-    "@ngx-translate/core" "^9.0.1"
+    "@ngx-translate/core" "^9.1.1"
     "@ngx-translate/http-loader" "^2.0.0"
-    "@types/flatpickr" "^3.1.2"
-    "@types/moment" "^2.13.0"
     bootstrap "^3.3.7"
     core-js "^2.5.1"
     flatpickr "^4.0.6"
@@ -340,7 +322,7 @@ angular-slickgrid@^0.7.4:
     jquery "^3.2.1"
     lodash "^4.17.4"
     moment-mini "^2.18.1"
-    slickgrid "^2.3.10"
+    slickgrid "^2.3.12"
     vinyl-paths "^2.1.0"
 
 ansi-align@^2.0.0:
@@ -2241,7 +2223,7 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-flatpickr@*, flatpickr@^4.0.6:
+flatpickr@^4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.0.6.tgz#d898778636984b9b46b590f3b60513fc260db709"
 
@@ -3800,7 +3782,7 @@ moment-mini@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment-mini/-/moment-mini-2.18.1.tgz#2734cc2cd7bfd40d598c2071cc9c96cb399789d7"
 
-moment@*, moment@^2.19.1:
+moment@^2.19.1:
   version "2.19.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.1.tgz#56da1a2d1cbf01d38b7e1afc31c10bcfa1929167"
 
@@ -5373,13 +5355,6 @@ silent-error@^1.0.0:
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
-
-slickgrid@^2.3.10:
-  version "2.3.10"
-  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.10.tgz#d85a52b7f23078b71c37f4c1232b11885d1e1815"
-  dependencies:
-    jquery ">=1.8.0"
-    jquery-ui ">=1.8.0"
 
 slickgrid@^2.3.12:
   version "2.3.12"

@@ -32,12 +32,7 @@ export class GridOdataComponent implements OnInit {
   processing = false;
   status = { text: '', class: '' };
 
-  constructor(private http: HttpClient, private odataService: GridOdataService) {
-    this.odataService.initOptions({
-      caseType: CaseType.pascalCase,
-      top: defaultPageSize
-    });
-  }
+  constructor(private http: HttpClient, private odataService: GridOdataService) { }
 
   ngOnInit(): void {
     this.columnDefinitions = [
@@ -66,17 +61,15 @@ export class GridOdataComponent implements OnInit {
         pageSize: defaultPageSize,
         totalItems: 0
       },
-      onBackendEventApi: {
-        onInit: (query) => this.getCustomerApiCall(query),
+      backendServiceApi: {
+        service: this.odataService,
         preProcess: () => this.displaySpinner(true),
         process: (query) => this.getCustomerApiCall(query),
         postProcess: (response) => {
           console.log(response);
           this.displaySpinner(false);
           this.getCustomerCallback(response);
-        },
-        filterTypingDebounce: 700,
-        service: this.odataService
+        }
       }
     };
   }
@@ -115,7 +108,7 @@ export class GridOdataComponent implements OnInit {
       let skip = 0;
       let orderBy = '';
       let countTotalItems = 100;
-      let columnFilters = {};
+      const columnFilters = {};
 
       for (const param of queryParams) {
         if (param.includes('$top=')) {

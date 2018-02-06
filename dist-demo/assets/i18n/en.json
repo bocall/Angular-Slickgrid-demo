@@ -9,6 +9,7 @@
   "OF": "of",
   "PAGE": "Page",
   "PAGE_X_OF_Y": "page {{x}} of {{y}}",
+  "REFRESH_DATASET": "Refresh Dataset",
   "SYNCHRONOUS_RESIZE": "Synchronous resize",
   "TOGGLE_FILTER_ROW": "Toggle Filter Row",
 
@@ -22,8 +23,10 @@
   "COMPANY": "Company",
   "COMPLETED": "Completed",
   "FALSE": "False",
+  "FEMALE": "Female",
   "FINISH": "Finish",
   "GENDER": "Gender",
+  "MALE": "Male",
   "NAME": "Name",
   "START": "Start",
   "TASK_X": "Task {{x}}",

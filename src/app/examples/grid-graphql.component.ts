@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Injectable, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
-import { CaseType, Column, FieldType, Formatters, FormElementType, GraphqlService, GridOption } from 'angular-slickgrid';
+import { CaseType, Column, FieldType, Formatters, FormElementType, GraphqlResult, GraphqlService, GraphqlServiceOption, GridOption } from 'angular-slickgrid';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 
 const defaultPageSize = 20;
 const sampleDataRoot = '/assets/data';
+const GRAPHQL_QUERY_DATASET_NAME = 'users';
 
 @Component({
   templateUrl: './grid-graphql.component.html',
@@ -47,7 +48,7 @@ export class GridGraphqlComponent implements OnInit {
         filter: {
           searchTerm: '', // default selection
           type: FormElementType.select,
-          selectOptions: [ { value: '', label: '' }, { value: 'male', label: 'male' }, { value: 'female', label: 'female' } ]
+          selectOptions: [ { value: '', label: '' }, { value: 'male', label: 'male', labelKey: 'MALE' }, { value: 'female', label: 'female', labelKey: 'FEMALE' } ]
         }
       },
       { id: 'company', name: 'Company', field: 'company', headerKey: 'COMPANY', filterable: true },
@@ -63,28 +64,22 @@ export class GridGraphqlComponent implements OnInit {
       },
       enableFiltering: true,
       enableCellNavigation: true,
-      enablePagination: true,
       enableTranslate: true,
       pagination: {
         pageSizes: [10, 15, 20, 25, 30, 40, 50, 75, 100],
         pageSize: defaultPageSize,
         totalItems: 0
       },
-      onBackendEventApi: {
-        onInit: (query) => this.getCustomerApiCall(query),
+      backendServiceApi: {
+        service: this.graphqlService,
+        options: this.getBackendOptions(this.isWithCursor),
+        // you can define the onInit callback OR enable the "executeProcessCommandOnInit" flag in the service init
+        // onInit: (query) => this.getCustomerApiCall(query)
         preProcess: () => this.displaySpinner(true),
         process: (query) => this.getCustomerApiCall(query),
-        postProcess: (response) => {
-          this.displaySpinner(false);
-          this.getCustomerCallback(response);
-        },
-        filterTypingDebounce: 700,
-        service: this.graphqlService
+        postProcess: (result: GraphqlResult) => this.displaySpinner(false)
       }
     };
-
-    const paginationOption = this.getPaginationOption(this.isWithCursor);
-    this.graphqlService.initOptions(paginationOption);
   }
 
   displaySpinner(isProcessing) {
@@ -105,61 +100,53 @@ export class GridGraphqlComponent implements OnInit {
 
   onWithCursorChange(isWithCursor) {
     this.isWithCursor = isWithCursor;
-    const paginationOption = this.getPaginationOption(isWithCursor);
+    const paginationOption = this.getBackendOptions(isWithCursor);
     this.graphqlService.initOptions(paginationOption);
     this.graphqlQuery = this.graphqlService.buildQuery();
   }
 
-  getPaginationOption(isWithCursor: boolean) {
-    let paginationOption;
+  getBackendOptions(withCursor: boolean): GraphqlServiceOption {
+    // with cursor, paginationOptions can be: { first, last, after, before }
+    // without cursor, paginationOptions can be: { first, last, offset }
+    return {
+      columnDefinitions: this.columnDefinitions,
+      datasetName: GRAPHQL_QUERY_DATASET_NAME,
+      isWithCursor: withCursor,
+      addLocaleIntoQuery: true,
 
-    if (isWithCursor) {
-      // with cursor, paginationOptions can be: { first, last, after, before }
-      paginationOption = {
-        columnDefinitions: this.columnDefinitions,
-        datasetName: 'users',
-        isWithCursor: true,
-        paginationOptions: {
-          first: defaultPageSize
-        }
-      };
-    } else {
-      // without cursor, paginationOptions can be: { first, last, offset }
-      paginationOption = {
-        columnDefinitions: this.columnDefinitions,
-        datasetName: 'users',
-        isWithCursor: false,
-        paginationOptions: {
-          first: defaultPageSize,
-          offset: 0
-        }
-      };
-    }
-
-    // when dealing with complex objects, we want to keep our field name with double quotes
-    // example with gender: query { users (orderBy:[{field:"gender",direction:ASC}]) {}
-    paginationOption.keepArgumentFieldDoubleQuotes = true;
-
-    return paginationOption;
+      // when dealing with complex objects, we want to keep our field name with double quotes
+      // example with gender: query { users (orderBy:[{field:"gender",direction:ASC}]) {}
+      keepArgumentFieldDoubleQuotes: true
+    };
   }
 
-  getCustomerCallback(data) {
-    this.displaySpinner(false);
-
-    this.dataset = data['items'];
-    this.graphqlQuery = data['query'];
-
-    // totalItems property needs to be filled for pagination to work correctly
-    this.gridOptions.pagination.totalItems = data['totalRecordCount'];
-  }
-
-  getCustomerApiCall(query) {
+  /**
+   * Calling your GraphQL backend server should always return a Promise or Observable of type GraphqlResult
+   *
+   * @param query
+   * @return Promise<GraphqlResult> | Observable<GraphqlResult>
+   */
+  getCustomerApiCall(query: string): Promise<GraphqlResult> {
     // in your case, you will call your WebAPI function (wich needs to return a Promise)
     // for the demo purpose, we will call a mock WebAPI function
+    const mockedResult = {
+      // the dataset name is the only unknown property
+      // will be the same defined in your GraphQL Service init, in our case GRAPHQL_QUERY_DATASET_NAME
+      data: {
+        [GRAPHQL_QUERY_DATASET_NAME]: {
+          nodes: [],
+          pageInfo: {
+            hasNextPage: true
+          },
+          totalCount: 100
+        }
+      }
+    };
+
     return new Promise((resolve, reject) => {
-      this.graphqlQuery = this.graphqlService.buildQuery();
       setTimeout(() => {
-        resolve({ items: [], totalRecordCount: 100, query });
+        this.graphqlQuery = this.graphqlService.buildQuery();
+        resolve(mockedResult);
       }, 500);
     });
   }
