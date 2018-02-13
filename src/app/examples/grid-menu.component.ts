@@ -55,7 +55,7 @@ export class GridMenuComponent implements OnInit {
         filterable: true,
         filter: {
           collection: [{ value: '', label: '' }, { value: true, label: 'true' }, { value: false, label: 'false' }],
-          type: FilterType.select,
+          type: FilterType.singleSelect,
           filterOptions: {
             offsetLet: 14,
             width: 100
