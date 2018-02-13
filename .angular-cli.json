@@ -26,6 +26,7 @@
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../node_modules/font-awesome/css/font-awesome.css",
         "../node_modules/flatpickr/dist/flatpickr.css",
+        "../node_modules/angular-slickgrid/lib/multiple-select/multiple-select.css",
         "styles.scss"
       ],
       "scripts": [
@@ -39,7 +40,8 @@
         "../node_modules/slickgrid/slick.dataview.js",
         "../node_modules/slickgrid/plugins/slick.rowselectionmodel.js",
         "../node_modules/slickgrid/controls/slick.pager.js",
-        "../node_modules/slickgrid/controls/slick.columnpicker.js"
+        "../node_modules/slickgrid/controls/slick.columnpicker.js",
+        "../node_modules/angular-slickgrid/lib/multiple-select/multiple-select.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

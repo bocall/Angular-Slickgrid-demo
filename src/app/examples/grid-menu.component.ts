@@ -54,9 +54,12 @@ export class GridMenuComponent implements OnInit {
         sortable: true,
         filterable: true,
         filter: {
-          searchTerm: '', // default selection
+          collection: [{ value: '', label: '' }, { value: true, label: 'true' }, { value: false, label: 'false' }],
           type: FilterType.select,
-          collection: [{ value: '', label: '' }, { value: true, label: 'true' }, { value: false, label: 'false' }]
+          filterOptions: {
+            offsetLet: 14,
+            width: 100
+          }
         }
       }
     ];

@@ -52,9 +52,11 @@ export class GridLocalizationComponent implements OnInit {
         minWidth: 100,
         filterable: true,
         filter: {
-          searchTerm: '', // default selection
-          type: FilterType.select,
-          collection: [ { value: '', label: '' }, { value: 'TRUE', labelKey: 'TRUE' }, { value: 'FALSE', labelKey: 'FALSE' } ]
+          collection: [ { value: '', label: '' }, { value: 'TRUE', labelKey: 'TRUE' }, { value: 'FALSE', labelKey: 'FALSE' } ],
+          type: FilterType.singleSelect,
+          filterOptions: {
+            width: 150
+          }
         }
       }
       // OR via your own custom translate formatter

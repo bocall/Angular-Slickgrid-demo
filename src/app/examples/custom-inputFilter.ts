@@ -1,4 +1,4 @@
-import { Column, Filter, FilterArguments, FilterCallback } from './../modules/angular-slickgrid';
+import { Column, Filter, FilterArguments, FilterCallback } from 'angular-slickgrid';
 import $ from 'jquery';
 
 // using external js modules in Angular
