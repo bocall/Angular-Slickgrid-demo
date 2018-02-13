@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { CaseType, Column, FormElementType, GridOption, FieldType, Formatters, GridOdataService } from 'angular-slickgrid';
+import { CaseType, Column, FilterType, GridOption, FieldType, Formatters, GridOdataService } from 'angular-slickgrid';
 import { HttpClient } from '@angular/common/http';
 
 const defaultPageSize = 20;
@@ -40,8 +40,8 @@ export class GridOdataComponent implements OnInit {
       { id: 'gender', name: 'Gender', field: 'gender', filterable: true, sortable: true, minWidth: 100,
         filter: {
           searchTerm: '', // default selection
-          type: FormElementType.select,
-          selectOptions: [ { value: '', label: '' }, { value: 'male', label: 'male' }, { value: 'female', label: 'female' } ]
+          type: FilterType.select,
+          collection: [ { value: '', label: '' }, { value: 'male', label: 'male' }, { value: 'female', label: 'female' } ]
         }
       },
       { id: 'company', name: 'Company', field: 'company', minWidth: 100 }

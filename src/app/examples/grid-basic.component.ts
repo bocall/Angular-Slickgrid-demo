@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Column, GridOption } from 'angular-slickgrid';
 
-// using external js modules in Angular
-declare var Slick: any;
-
 @Component({
   templateUrl: './grid-basic.component.html'
 })
