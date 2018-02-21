@@ -5363,6 +5363,13 @@ slickgrid@^2.3.12:
     jquery ">=1.8.0"
     jquery-ui ">=1.8.0"
 
+slickgrid@^2.3.13:
+  version "2.3.13"
+  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.13.tgz#e10edfde531ba9cc31b6d6d74d2b071532146700"
+  dependencies:
+    jquery ">=1.8.0"
+    jquery-ui ">=1.8.0"
+
 sntp@1.x.x:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/sntp/-/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"
