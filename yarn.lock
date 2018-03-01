@@ -309,9 +309,9 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-angular-slickgrid@^0.11.2:
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.11.3.tgz#6120caf5cd3f40d4e915b50e4c59d98ee4d7dbda"
+angular-slickgrid@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.12.0.tgz#3ec3b4c240a940e478303a64c6657ca88e196851"
   dependencies:
     "@ngx-translate/core" "^9.1.1"
     "@ngx-translate/http-loader" "^2.0.0"
@@ -322,8 +322,9 @@ angular-slickgrid@^0.11.2:
     jquery "^3.2.1"
     lodash "^4.17.4"
     moment-mini "^2.19.4"
-    slickgrid ">=2.3.13"
-    text-encoding "^0.6.4"
+    rimraf "^2.6.2"
+    slickgrid "^2.3.15"
+    text-encoding-utf-8 "^1.0.2"
     tslib "^1.7.1"
     vinyl-paths "^2.1.0"
 
@@ -5119,7 +5120,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.2, rimraf@^2.5.4, rimraf@^2.6.0, rimraf@^2.6.1:
+rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.2, rimraf@^2.5.4, rimraf@^2.6.0, rimraf@^2.6.1, rimraf@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
@@ -5358,9 +5359,9 @@ slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
-slickgrid@>=2.3.13, slickgrid@^2.3.13:
-  version "2.3.13"
-  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.13.tgz#e10edfde531ba9cc31b6d6d74d2b071532146700"
+slickgrid@^2.3.15:
+  version "2.3.15"
+  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.15.tgz#ceeae99e5733a19849df19508661c55b1b6da64d"
   dependencies:
     jquery ">=1.8.0"
     jquery-ui ">=1.8.0"
@@ -5750,10 +5751,6 @@ term-size@^1.2.0:
 text-encoding-utf-8@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/text-encoding-utf-8/-/text-encoding-utf-8-1.0.2.tgz#585b62197b0ae437e3c7b5d0af27ac1021e10d13"
-
-text-encoding@^0.6.4:
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.6.4.tgz#e399a982257a276dae428bb92845cb71bdc26d19"
 
 through2@^2.0.0, through2@^2.0.1:
   version "2.0.3"
