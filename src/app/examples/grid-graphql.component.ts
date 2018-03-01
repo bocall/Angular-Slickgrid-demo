@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
-import { CaseType, Column, FieldType, FilterType, Formatters, GraphqlResult, GraphqlService , GraphqlServiceOption, GridOption } from 'angular-slickgrid';
+import { CaseType, Column, FieldType, FilterType, Formatters, GraphqlResult, GraphqlService , GraphqlServiceOption, GridOption, GridStateService, OperatorType, SortDirection } from 'angular-slickgrid';
 
 const defaultPageSize = 20;
 const sampleDataRoot = '/assets/data';
@@ -25,6 +25,7 @@ export class GridGraphqlComponent implements OnInit {
         <li>The (*) can be used as startsWith (ex.: "abc*" => startsWith "abc") / endsWith (ex.: "*xyz" => endsWith "xyz")</li>
         <li>The other operators can be used on column type number for example: ">=100" (bigger or equal than 100)</li>
       </ul>
+      <li>You can also preload a grid with certain "presets" like Filters / Sorters / Pagination <a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Grid-State-&-Preset" target="_blank">Wiki - Grid Preset</a>
     </ul>
   `;
   columnDefinitions: Column[];
@@ -37,7 +38,7 @@ export class GridGraphqlComponent implements OnInit {
   isWithCursor = false;
   selectedLanguage: string;
 
-  constructor(private http: HttpClient, private graphqlService: GraphqlService, private translate: TranslateService) {
+  constructor(private graphqlService: GraphqlService, private gridStateService: GridStateService, private translate: TranslateService) {
     this.selectedLanguage = this.translate.getDefaultLang();
   }
 
@@ -46,17 +47,18 @@ export class GridGraphqlComponent implements OnInit {
       { id: 'name', name: 'Name', field: 'name', headerKey: 'NAME', filterable: true, sortable: true, type: FieldType.string },
       { id: 'gender', name: 'Gender', field: 'gender', headerKey: 'GENDER', filterable: true, sortable: true,
         filter: {
-          // searchTerm: '', // default selection
           type: FilterType.singleSelect,
-          collection: [{ value: '', label: '' }, { value: 'male', label: 'male', labelKey: 'MALE' }, { value: 'female', label: 'female', labelKey: 'FEMALE' }]
+          collection: [{ value: '', label: '' }, { value: 'male', label: 'male', labelKey: 'MALE' }, { value: 'female', label: 'female', labelKey: 'FEMALE' }],
+          searchTerm: 'female'
         }
       },
       { id: 'company', name: 'Company', field: 'company', headerKey: 'COMPANY',
+        sortable: true,
         filterable: true,
         filter: {
-          // searchTerms: [], // default selection
           type: FilterType.multipleSelect,
-          collection: [{ value: 'ABC', label: 'Company ABC'}, { value: 'XYZ', label: 'Company XYZ'}]
+          collection: [{ value: 'acme', label: 'Acme'}, { value: 'abc', label: 'Company ABC'}, { value: 'xyz', label: 'Company XYZ'}],
+          searchTerms: ['abc']
         }
       },
       { id: 'billing.address.street', name: 'Billing Address Street', field: 'billing.address.street', headerKey: 'BILLING.ADDRESS.STREET', filterable: true, sortable: true },
@@ -64,11 +66,7 @@ export class GridGraphqlComponent implements OnInit {
     ];
 
     this.gridOptions = {
-      enableAutoResize: true,
-      autoResize: {
-        containerId: 'demo-container',
-        sidePadding: 15
-      },
+      enableAutoResize: false,
       enableFiltering: true,
       enableCellNavigation: true,
       enableTranslate: true,
@@ -76,6 +74,20 @@ export class GridGraphqlComponent implements OnInit {
         pageSizes: [10, 15, 20, 25, 30, 40, 50, 75, 100],
         pageSize: defaultPageSize,
         totalItems: 0
+      },
+      presets: {
+        // you can also type operator as string, e.g.: operator: 'EQ'
+        filters: [
+          { columnId: 'gender', searchTerm: 'male', operator: OperatorType.equal },
+          { columnId: 'name', searchTerm: 'John Doe', operator: OperatorType.contains },
+          { columnId: 'company', searchTerms: ['xyz'], operator: 'IN' }
+        ],
+        sorters: [
+          // direction can typed as 'asc' (uppercase or lowercase) and/or use the SortDirection type
+          { columnId: 'name', direction: 'asc' },
+          { columnId: 'company', direction: SortDirection.DESC }
+        ],
+        pagination: { pageNumber: 2, pageSize: 20 }
       },
       backendServiceApi: {
         service: this.graphqlService,
@@ -90,7 +102,6 @@ export class GridGraphqlComponent implements OnInit {
   }
 
   displaySpinner(isProcessing) {
-    console.log('processing', isProcessing);
     this.processing = isProcessing;
     this.status = (isProcessing)
       ? { text: 'processing...', class: 'alert alert-danger' }
@@ -100,7 +111,7 @@ export class GridGraphqlComponent implements OnInit {
   onWithCursorChange(isWithCursor) {
     this.isWithCursor = isWithCursor;
     const paginationOption = this.getBackendOptions(isWithCursor);
-    this.graphqlService.initOptions(paginationOption);
+    this.graphqlService.init(paginationOption);
     this.graphqlQuery = this.graphqlService.buildQuery();
   }
 
@@ -145,10 +156,14 @@ export class GridGraphqlComponent implements OnInit {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.graphqlQuery = this.graphqlService.buildQuery();
-        console.log(this.graphqlQuery);
         resolve(mockedResult);
       }, 500);
     });
+  }
+
+  /** Save current Filters, Sorters in LocaleStorage or DB */
+  saveCurrentGridState(grid) {
+    console.log('GraphQL current grid state', this.gridStateService.getCurrentGridState());
   }
 
   switchLanguage() {

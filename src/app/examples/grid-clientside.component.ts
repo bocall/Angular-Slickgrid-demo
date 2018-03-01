@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomInputFilter } from './custom-inputFilter';
-import { Column, FieldType, FilterType, Formatter, Formatters, GridOption } from 'angular-slickgrid';
+import { Column, FieldType, FilterType, Formatter, Formatters, GridOption, GridStateService } from 'angular-slickgrid';
 
 const NB_ITEMS = 500;
 function randomBetween(min, max) {
@@ -27,13 +27,15 @@ export class GridClientSideComponent implements OnInit {
         <li>FieldType of dateUtc/date (from dataset) can use an extra option of "filterSearchType" to let user filter more easily. For example, in the "UTC Date" field below, you can type "&gt;02/28/2017", also when dealing with UTC you have to take the time difference in consideration.</li>
       </ul>
       <li>On String filters, (*) can be used as startsWith (Hello* => matches "Hello Word") ... endsWith (*Doe => matches: "John Doe")</li>
-      <li>Custom Filter are now possible, "Description" column below, is a customized InputFilter with different placeholder. See <a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Custom-Filter" target="_blank">Wiki - Custom Filter</a></li>
+      <li>Custom Filter are now possible, "Description" column below, is a customized InputFilter with different placeholder. See <a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Custom-Filter" target="_blank">Wiki - Custom Filter</a>
     </ul>
   `;
 
   columnDefinitions: Column[];
   gridOptions: GridOption;
   dataset: any[];
+
+  constructor(private gridStateService: GridStateService) {}
 
   ngOnInit(): void {
     // prepare a multiple-select array to filter with
@@ -43,42 +45,45 @@ export class GridClientSideComponent implements OnInit {
     }
 
     this.columnDefinitions = [
-      { id: 'title', name: 'Title', field: 'title', filterable: true, sortable: true, type: FieldType.string,  },
-      { id: 'description', name: 'Description', field: 'description', filterable: true, sortable: true,
+      { id: 'title', name: 'Title', field: 'title', filterable: true, sortable: true, type: FieldType.string, minWidth: 45 },
+      { id: 'description', name: 'Description', field: 'description', filterable: true, sortable: true, minWidth: 80,
         type: FieldType.string,
         filter: {
           type: FilterType.custom,
           customFilter: new CustomInputFilter() // create a new instance to make each Filter independent from each other
         }
-       },
-      { id: 'duration', name: 'Duration (days)', field: 'duration', sortable: true, type: FieldType.number,
+      },
+      { id: 'duration', name: 'Duration (days)', field: 'duration', sortable: true, type: FieldType.number, exportCsvForceToKeepAsString: true,
         minWidth: 55,
         filterable: true,
         filter: {
           collection: multiSelectFilterArray,
           type: FilterType.multipleSelect,
-          searchTerms: [1, 10, 20], // default selection
+          searchTerms: [1, 33, 50], // default selection
+
           // we could add certain option(s) to the "multiple-select" plugin
-          filterOptions: { maxHeight: 250 }
+          filterOptions: {
+            maxHeight: 250,
+            width: 175
+          }
         }
       },
-      { id: 'complete', name: '% Complete', field: 'percentComplete', formatter: Formatters.percentCompleteBar, type: FieldType.number, filterable: true, sortable: true },
-      { id: 'start', name: 'Start', field: 'start', formatter: Formatters.dateIso, filterable: true, sortable: true, type: FieldType.date },
-      { id: 'usDateShort', name: 'US Date Short', field: 'usDateShort', filterable: true, sortable: true, type: FieldType.dateUsShort },
+      { id: 'complete', name: '% Complete', field: 'percentComplete', formatter: Formatters.percentCompleteBar, minWidth: 70, type: FieldType.number, filterable: true, sortable: true },
+      { id: 'start', name: 'Start', field: 'start', formatter: Formatters.dateIso, filterable: true, sortable: true, type: FieldType.date, minWidth: 60, exportWithFormatter: true },
+      { id: 'usDateShort', name: 'US Date Short', field: 'usDateShort', filterable: true, sortable: true, type: FieldType.dateUsShort, minWidth: 55 },
       { id: 'utcDate', name: 'UTC Date', field: 'utcDate', formatter: Formatters.dateTimeIsoAmPm, filterable: true, sortable: true, minWidth: 115, type: FieldType.dateUtc, filterSearchType: FieldType.dateTimeIso },
       { id: 'utcDate2', name: 'UTC Date (filterSearchType: dateUS)', field: 'utcDate', filterable: true, sortable: true, minWidth: 115, type: FieldType.dateUtc, filterSearchType: FieldType.dateUs },
-      { id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven', maxWidth: 80, formatter: Formatters.checkmark,
+      { id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven', minWidth: 85, maxWidth: 85, formatter: Formatters.checkmark,
         type: FieldType.boolean,
         sortable: true,
         filterable: true,
         filter: {
-          collection: [ { value: '', label: '' }, { value: true, label: 'true' }, { value: false, label: 'false' } ],
+          collection: [ { value: '', label: '' }, { value: true, label: 'True' }, { value: false, label: 'False' } ],
           type: FilterType.singleSelect,
-          // searchTerm: true, // default selection
+
+          // we could add certain option(s) to the "multiple-select" plugin
           filterOptions: {
-            // you can add "multiple-select" plugin options like styling the first row
-            offsetLeft: 14,
-            width: 100
+            autoDropWidth: true
           },
         }
       }
@@ -88,7 +93,19 @@ export class GridClientSideComponent implements OnInit {
         containerId: 'demo-container',
         sidePadding: 15
       },
-      enableFiltering: true
+      enableFiltering: true,
+
+      // use columnDef searchTerms OR use presets as shown below
+      presets: {
+        filters: [
+          { columnId: 'duration', searchTerms: [2, 22, 44] },
+          { columnId: 'complete', searchTerm: '>5' }
+        ],
+        sorters: [
+          { columnId: 'duration', direction: 'DESC' },
+          { columnId: 'complete', direction: 'ASC' }
+        ],
+      }
     };
 
     // mock a dataset
@@ -107,7 +124,7 @@ export class GridClientSideComponent implements OnInit {
       this.dataset[i] = {
         id: i,
         title: 'Task ' + i,
-        description: (i % 28 === 1) ? null : 'desc ' + i, // also add some random to test NULL field
+        description: (i % 5) ? 'desc ' + i : null, // also add some random to test NULL field
         duration: randomDuration,
         percentComplete: randomPercent,
         percentCompleteNumber: randomPercent,
@@ -117,5 +134,10 @@ export class GridClientSideComponent implements OnInit {
         effortDriven: (i % 3 === 0)
       };
     }
+  }
+
+  /** Save current Filters, Sorters in LocaleStorage or DB */
+  saveCurrentGridState(grid) {
+    console.log('Client current grid state', this.gridStateService.getCurrentGridState());
   }
 }

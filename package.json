@@ -35,7 +35,7 @@
     "moment": "^2.19.1",
     "rxjs": "^5.5.5",
     "slickgrid": "^2.3.13",
-    "text-encoding": "^0.6.4",
+    "text-encoding-utf-8": "^1.0.2",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

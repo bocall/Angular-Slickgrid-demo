@@ -309,9 +309,9 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-angular-slickgrid@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.10.0.tgz#16135635013e8caee2a7e5cbc4792073bb0b1105"
+angular-slickgrid@^0.11.2:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.11.3.tgz#6120caf5cd3f40d4e915b50e4c59d98ee4d7dbda"
   dependencies:
     "@ngx-translate/core" "^9.1.1"
     "@ngx-translate/http-loader" "^2.0.0"
@@ -321,8 +321,10 @@ angular-slickgrid@^0.10.0:
     font-awesome "^4.7.0"
     jquery "^3.2.1"
     lodash "^4.17.4"
-    moment-mini "^2.18.1"
-    slickgrid "^2.3.12"
+    moment-mini "^2.19.4"
+    slickgrid ">=2.3.13"
+    text-encoding "^0.6.4"
+    tslib "^1.7.1"
     vinyl-paths "^2.1.0"
 
 ansi-align@^2.0.0:
@@ -3778,9 +3780,9 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkd
   dependencies:
     minimist "0.0.8"
 
-moment-mini@^2.18.1:
-  version "2.18.1"
-  resolved "https://registry.yarnpkg.com/moment-mini/-/moment-mini-2.18.1.tgz#2734cc2cd7bfd40d598c2071cc9c96cb399789d7"
+moment-mini@^2.19.4:
+  version "2.19.4"
+  resolved "https://registry.yarnpkg.com/moment-mini/-/moment-mini-2.19.4.tgz#1af472aebf97f7d219280b4d02dfc3b34359e45d"
 
 moment@^2.19.1:
   version "2.19.1"
@@ -5356,14 +5358,7 @@ slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
-slickgrid@^2.3.12:
-  version "2.3.12"
-  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.12.tgz#f509cd3e6f024371cd3d1fa7e991826466826f87"
-  dependencies:
-    jquery ">=1.8.0"
-    jquery-ui ">=1.8.0"
-
-slickgrid@^2.3.13:
+slickgrid@>=2.3.13, slickgrid@^2.3.13:
   version "2.3.13"
   resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.13.tgz#e10edfde531ba9cc31b6d6d74d2b071532146700"
   dependencies:
@@ -5751,6 +5746,10 @@ term-size@^1.2.0:
   resolved "https://registry.yarnpkg.com/term-size/-/term-size-1.2.0.tgz#458b83887f288fc56d6fffbfad262e26638efa69"
   dependencies:
     execa "^0.7.0"
+
+text-encoding-utf-8@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/text-encoding-utf-8/-/text-encoding-utf-8-1.0.2.tgz#585b62197b0ae437e3c7b5d0af27ac1021e10d13"
 
 text-encoding@^0.6.4:
   version "0.6.4"

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { CaseType, Column, FilterType, GridOption, FieldType, Formatters, GridOdataService } from 'angular-slickgrid';
+import { Component, Injectable, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { CaseType, Column, FilterType, GridOption, FieldType, Formatters, GridOdataService, GridStateService, OperatorType } from 'angular-slickgrid';
 import { HttpClient } from '@angular/common/http';
 
 const defaultPageSize = 20;
@@ -9,6 +9,7 @@ const sampleDataRoot = 'assets/data';
   templateUrl: './grid-odata.component.html',
   providers: [GridOdataService]
 })
+@Injectable()
 export class GridOdataComponent implements OnInit {
   title = 'Example 5: Grid connected to Backend Server with OData';
   subTitle = `
@@ -22,6 +23,7 @@ export class GridOdataComponent implements OnInit {
         <li>The other operators can be used on column type number for example: ">=100" (bigger or equal than 100)</li>
       </ul>
       <li>OData Service could be replaced by other Service type in the future (GraphQL or whichever you provide)</li>
+      <li>You can also preload a grid with certain "presets" like Filters / Sorters / Pagination <a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Grid-State-&-Preset" target="_blank">Wiki - Grid Preset</a>
     </ul>
   `;
   columnDefinitions: Column[];
@@ -32,19 +34,19 @@ export class GridOdataComponent implements OnInit {
   processing = false;
   status = { text: '', class: '' };
 
-  constructor(private http: HttpClient, private odataService: GridOdataService) { }
+  constructor(private http: HttpClient, private gridStateService: GridStateService, private odataService: GridOdataService) {}
 
   ngOnInit(): void {
     this.columnDefinitions = [
-      { id: 'name', name: 'Name', field: 'name', filterable: true, sortable: true, type: FieldType.string, minWidth: 100 },
-      { id: 'gender', name: 'Gender', field: 'gender', filterable: true, sortable: true, minWidth: 100,
+      { id: 'name', name: 'Name', field: 'name', filterable: true, sortable: true, type: FieldType.string },
+      { id: 'gender', name: 'Gender', field: 'gender', filterable: true, sortable: true,
         filter: {
-          searchTerm: '', // default selection
           type: FilterType.singleSelect,
-          collection: [ { value: '', label: '' }, { value: 'male', label: 'male' }, { value: 'female', label: 'female' } ]
+          collection: [ { value: '', label: '' }, { value: 'male', label: 'male' }, { value: 'female', label: 'female' } ],
+          searchTerm: 'female'
         }
       },
-      { id: 'company', name: 'Company', field: 'company', minWidth: 100 }
+      { id: 'company', name: 'Company', field: 'company' }
     ];
 
     this.gridOptions = {
@@ -55,18 +57,22 @@ export class GridOdataComponent implements OnInit {
       },
       enableFiltering: true,
       enableCellNavigation: true,
-      enablePagination: true,
       pagination: {
         pageSizes: [10, 15, 20, 25, 30, 40, 50, 75, 100],
         pageSize: defaultPageSize,
         totalItems: 0
+      },
+      presets: {
+        // you can also type operator as string, e.g.: operator: 'EQ'
+        filters: [{ columnId: 'gender', searchTerm: 'male', operator:  OperatorType.equal }],
+        sorters: [{ columnId: 'name', direction: 'desc' }],
+        pagination: { pageNumber: 2, pageSize: 20 }
       },
       backendServiceApi: {
         service: this.odataService,
         preProcess: () => this.displaySpinner(true),
         process: (query) => this.getCustomerApiCall(query),
         postProcess: (response) => {
-          console.log(response);
           this.displaySpinner(false);
           this.getCustomerCallback(response);
         }
@@ -82,8 +88,6 @@ export class GridOdataComponent implements OnInit {
   }
 
   getCustomerCallback(data) {
-    this.displaySpinner(false);
-
     this.dataset = data['items'];
     this.odataQuery = data['query'];
 
@@ -95,6 +99,10 @@ export class GridOdataComponent implements OnInit {
     // in your case, you will call your WebAPI function (wich needs to return a Promise)
     // for the demo purpose, we will call a mock WebAPI function
     return this.getCustomerDataApiMock(query);
+  }
+
+  saveCurrentGridState(grid) {
+    console.log('OData current grid state', this.gridStateService.getCurrentGridState());
   }
 
   /** This function is only here to mock a WebAPI call (since we are using a JSON file for the demo)
@@ -202,7 +210,7 @@ export class GridOdataComponent implements OnInit {
         const updatedData = filteredData.slice(firstRow, firstRow + top);
 
         setTimeout(() => {
-          resolve({ items: updatedData, totalRecordCount: countTotalItems, query: query });
+          resolve({ items: updatedData, totalRecordCount: countTotalItems, query });
         }, 500);
       });
     });
