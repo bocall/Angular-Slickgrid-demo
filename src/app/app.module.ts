@@ -20,6 +20,10 @@ import { LOCATION_INITIALIZED } from '@angular/common';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { SwtCommonGridTestComponent } from './examples/swt-common-grid-test.component';
+import { SwtCommonGridPaginationComponent } from './examples/swt-common-grid-pagination.component';
+import { SwtCommonGridComponent } from './examples/swt-common-grid.component';
+
 import { AppComponent } from './app.component';
 import { AngularSlickgridModule } from 'angular-slickgrid';
 
@@ -61,6 +65,9 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
     GridMenuComponent,
     GridOdataComponent,
     GridRowSelectionComponent,
+    SwtCommonGridTestComponent,
+    SwtCommonGridPaginationComponent,
+    SwtCommonGridComponent,
     HomeComponent
   ],
   imports: [
