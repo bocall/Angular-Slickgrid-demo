@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-dist": "npm-run-all build del-ghpage copy-ghpage:dist",
+    "build-demo": "npm-run-all build del-ghpage copy-ghpage:dist",
     "copy-ghpage:dist": "cross-env copyfiles --up 1 dist-demo/**/*.* ../Angular-Slickgrid-GhPages/",
     "copy:i18n": "cross-env copyfiles -f node_modules/angular-slickgrid/i18n/*.json src/assets/i18n",
     "del-ghpage": "cross-env del ../Angular-Slickgrid-GhPages/*.*"
@@ -27,7 +27,7 @@
     "@angular/router": "^5.1.1",
     "@ngx-translate/core": "9.1.1",
     "@ngx-translate/http-loader": "2.0.0",
-    "angular-slickgrid": "^0.12.5",
+    "angular-slickgrid": "^0.12.8",
     "bootstrap": "^3.3.7",
     "copyfiles": "^1.2.0",
     "core-js": "^2.4.1",
