@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CustomInputFilter } from './custom-inputFilter';
 import { Column, FieldType, FilterType, Formatter, Formatters, GridOption, GridStateService } from 'angular-slickgrid';
+import { Subscription } from 'rxjs/Subscription';
 
 const NB_ITEMS = 500;
 function randomBetween(min, max) {
@@ -10,7 +11,7 @@ function randomBetween(min, max) {
 @Component({
   templateUrl: './grid-clientside.component.html'
 })
-export class GridClientSideComponent implements OnInit {
+export class GridClientSideComponent implements OnInit, OnDestroy {
   title = 'Example 4: Client Side Sort/Filter';
   subTitle = `
     Sort/Filter on client side only using SlickGrid DataView (<a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Sorting" target="_blank">Wiki link</a>)
@@ -34,8 +35,15 @@ export class GridClientSideComponent implements OnInit {
   columnDefinitions: Column[];
   gridOptions: GridOption;
   dataset: any[];
+  gridStateSub: Subscription;
 
-  constructor(private gridStateService: GridStateService) {}
+  constructor(private gridStateService: GridStateService) {
+    this.gridStateSub = this.gridStateService.onGridStateChanged.subscribe((data) => console.log(data));
+  }
+
+  ngOnDestroy() {
+    this.gridStateSub.unsubscribe();
+  }
 
   ngOnInit(): void {
     // prepare a multiple-select array to filter with
@@ -99,7 +107,8 @@ export class GridClientSideComponent implements OnInit {
       presets: {
         filters: [
           { columnId: 'duration', searchTerms: [2, 22, 44] },
-          { columnId: 'complete', searchTerm: '>5' }
+          { columnId: 'complete', searchTerm: '>5' },
+          { columnId: 'effort-driven', searchTerm: true }
         ],
         sorters: [
           { columnId: 'duration', direction: 'DESC' },
