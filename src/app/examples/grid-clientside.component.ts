@@ -1,17 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CustomInputFilter } from './custom-inputFilter';
-import { Column, FieldType, FilterType, Formatter, Formatters, GridOption, GridStateService } from 'angular-slickgrid';
 import { Subscription } from 'rxjs/Subscription';
+import { CustomInputFilter } from './custom-inputFilter';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Column, FieldType, FilterType, Formatters, GridOption, GridStateChange, GridStateService, OperatorType } from 'angular-slickgrid';
+import { TranslateService } from '@ngx-translate/core';
 
-const NB_ITEMS = 500;
 function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+const NB_ITEMS = 500;
 
 @Component({
   templateUrl: './grid-clientside.component.html'
 })
-export class GridClientSideComponent implements OnInit, OnDestroy {
+export class GridClientSideComponent implements OnInit {
   title = 'Example 4: Client Side Sort/Filter';
   subTitle = `
     Sort/Filter on client side only using SlickGrid DataView (<a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Sorting" target="_blank">Wiki link</a>)
@@ -35,14 +36,8 @@ export class GridClientSideComponent implements OnInit, OnDestroy {
   columnDefinitions: Column[];
   gridOptions: GridOption;
   dataset: any[];
-  gridStateSub: Subscription;
 
-  constructor(private gridStateService: GridStateService) {
-    this.gridStateSub = this.gridStateService.onGridStateChanged.subscribe((data) => console.log(data));
-  }
-
-  ngOnDestroy() {
-    this.gridStateSub.unsubscribe();
+  constructor(private gridStateService: GridStateService, private translate: TranslateService) {
   }
 
   ngOnInit(): void {
@@ -76,11 +71,17 @@ export class GridClientSideComponent implements OnInit, OnDestroy {
           }
         }
       },
-      { id: 'complete', name: '% Complete', field: 'percentComplete', formatter: Formatters.percentCompleteBar, minWidth: 70, type: FieldType.number, filterable: true, sortable: true },
-      { id: 'start', name: 'Start', field: 'start', formatter: Formatters.dateIso, filterable: true, sortable: true, type: FieldType.date, minWidth: 60, exportWithFormatter: true },
-      { id: 'usDateShort', name: 'US Date Short', field: 'usDateShort', filterable: true, sortable: true, type: FieldType.dateUsShort, minWidth: 55 },
-      { id: 'utcDate', name: 'UTC Date', field: 'utcDate', formatter: Formatters.dateTimeIsoAmPm, filterable: true, sortable: true, minWidth: 115, type: FieldType.dateUtc, filterSearchType: FieldType.dateTimeIso },
-      { id: 'utcDate2', name: 'UTC Date (filterSearchType: dateUS)', field: 'utcDate', filterable: true, sortable: true, minWidth: 115, type: FieldType.dateUtc, filterSearchType: FieldType.dateUs },
+      { id: 'complete', name: '% Complete', field: 'percentComplete', formatter: Formatters.percentCompleteBar, minWidth: 70, type: FieldType.number, sortable: true,
+        filterable: true, filter: { type: FilterType.compoundInput }
+      },
+      { id: 'start', name: 'Start', field: 'start', formatter: Formatters.dateIso, sortable: true, minWidth: 75, exportWithFormatter: true,
+        type: FieldType.date, filterable: true, filter: { type: FilterType.compoundDate }
+      },
+      { id: 'usDateShort', name: 'US Date Short', field: 'usDateShort', sortable: true, minWidth: 70, width: 70,
+        type: FieldType.dateUsShort, filterable: true, filter: { type: FilterType.compoundDate }
+      },
+      { id: 'utcDate', name: 'UTC Date', field: 'utcDate', formatter: Formatters.dateTimeIsoAmPm, sortable: true, minWidth: 115,
+        type: FieldType.dateUtc, outputType: FieldType.dateTimeIsoAmPm, filterable: true, filter: { type: FilterType.compoundDate } },
       { id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven', minWidth: 85, maxWidth: 85, formatter: Formatters.checkmark,
         type: FieldType.boolean,
         sortable: true,
@@ -102,13 +103,17 @@ export class GridClientSideComponent implements OnInit, OnDestroy {
         sidePadding: 15
       },
       enableFiltering: true,
+      params: {
+        i18n: this.translate
+      },
 
       // use columnDef searchTerms OR use presets as shown below
       presets: {
         filters: [
           { columnId: 'duration', searchTerms: [2, 22, 44] },
-          { columnId: 'complete', searchTerm: '>5' },
-          { columnId: 'effort-driven', searchTerm: true }
+          // { columnId: 'complete', searchTerm: '5', operator: '>' },
+          { columnId: 'usDateShort', operator: '<', searchTerm: '4/20/25' },
+          // { columnId: 'effort-driven', searchTerm: true }
         ],
         sorters: [
           { columnId: 'duration', direction: 'DESC' },
@@ -145,8 +150,13 @@ export class GridClientSideComponent implements OnInit, OnDestroy {
     }
   }
 
+  /** Dispatched event of a Grid State Changed event */
+  gridStateChanged(gridState: GridStateChange) {
+    console.log('Client sample, Grid State changed:: ', gridState);
+  }
+
   /** Save current Filters, Sorters in LocaleStorage or DB */
   saveCurrentGridState(grid) {
-    console.log('Client current grid state', this.gridStateService.getCurrentGridState());
+    console.log('Client sample, last Grid State:: ', this.gridStateService.getCurrentGridState());
   }
 }

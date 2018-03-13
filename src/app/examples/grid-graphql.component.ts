@@ -1,11 +1,9 @@
-import { Component, EventEmitter, Injectable, Input, OnInit, Output, OnDestroy } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { CaseType, Column, FieldType, FilterType, Formatters, GraphqlResult, GraphqlService , GraphqlServiceOption, GridOption, GridStateService, OperatorType, SortDirection } from 'angular-slickgrid';
 import { Subscription } from 'rxjs/Subscription';
+import { Component, Injectable, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { Column, FieldType, FilterType, Formatters, GraphqlResult, GraphqlService, GraphqlServiceOption, GridOption, OperatorType, SearchTerm, SortDirection, GridStateService } from 'angular-slickgrid';
 
 const defaultPageSize = 20;
-const sampleDataRoot = '/assets/data';
 const GRAPHQL_QUERY_DATASET_NAME = 'users';
 
 @Component({
