@@ -309,9 +309,9 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-angular-slickgrid@^0.12.10:
-  version "0.12.10"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.12.10.tgz#82dacbd798cca4d45b3445e0a425e489ea5efff6"
+angular-slickgrid@^0.13.7:
+  version "0.13.7"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.13.7.tgz#0f34a42c50d8314dbe86f37cf52b97be3db28f30"
   dependencies:
     "@ngx-translate/core" "^9.1.1"
     "@ngx-translate/http-loader" "^2.0.0"
@@ -320,6 +320,7 @@ angular-slickgrid@^0.12.10:
     flatpickr "^4.0.6"
     font-awesome "^4.7.0"
     jquery "^3.2.1"
+    jquery-ui-dist "^1.12.1"
     lodash "^4.17.4"
     moment-mini "^2.19.4"
     rimraf "^2.6.2"
@@ -3268,6 +3269,10 @@ jasmine@^2.5.3:
 jasminewd2@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/jasminewd2/-/jasminewd2-2.2.0.tgz#e37cf0b17f199cce23bea71b2039395246b4ec4e"
+
+jquery-ui-dist@^1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz#5c0815d3cc6f90ff5faaf5b268a6e23b4ca904fa"
 
 jquery-ui@>=1.8.0:
   version "1.12.1"

@@ -6,6 +6,7 @@ import { GridClientSideComponent } from './examples/grid-clientside.component';
 import { GridEditorComponent } from './examples/grid-editor.component';
 import { GridFormatterComponent } from './examples/grid-formatter.component';
 import { GridGraphqlComponent } from './examples/grid-graphql.component';
+import { GridGroupingComponent } from './examples/grid-grouping.component';
 import { GridHeaderMenuComponent } from './examples/grid-headermenu.component';
 import { GridHeaderButtonComponent } from './examples/grid-headerbutton.component';
 import { GridLocalizationComponent } from './examples/grid-localization.component';
@@ -59,6 +60,7 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
     GridClientSideComponent,
     GridFormatterComponent,
     GridGraphqlComponent,
+    GridGroupingComponent,
     GridHeaderButtonComponent,
     GridHeaderMenuComponent,
     GridLocalizationComponent,
