@@ -3,20 +3,14 @@
     "tasks": [
         {
             "label": "Build Demo",
-            "command": "npm",
             "type": "shell",
-            "args": [
-                "run build"
-            ],
+            "command": "npm run build",
             "problemMatcher": []
         },
         {
             "label": "Build & Copy Demo",
-            "command": "npm",
             "type": "shell",
-            "args": [
-                "run build-demo"
-            ],
+            "command": "npm run build-demo",
             "problemMatcher": []
         }
     ]

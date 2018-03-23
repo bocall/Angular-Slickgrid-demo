@@ -1,14 +1,14 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add text-encoding
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
 
 PATH: 
-  C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Microsoft MPI\Bin\;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\QT Lite\QTSystem;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files (x86)\WebEx\PTools020000000;C:\Program Files\TortoiseSVN\bin;C:\Program Files\dotnet\;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Subversion\bin;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\amd64\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Yarn\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\1E\NomadBranch\;C:\Program Files\Microsoft VS Code\bin;C:\Users\sesa213338\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code Insiders\bin;C:\Users\sesa213338\AppData\Roaming\npm;C:\Users\sesa213338\AppData\Local\Box\Box Edit\;C:\Users\sesa213338\AppData\Local\atom\bin;C:\Users\sesa213338\AppData\Local\Yarn\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\
+  C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Microsoft MPI\Bin\;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\QT Lite\QTSystem;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files (x86)\WebEx\PTools020000000;C:\Program Files\TortoiseSVN\bin;C:\Program Files\dotnet\;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Subversion\bin;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\amd64\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\1E\NomadBranch\;C:\Program Files\Git\cmd;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\Microsoft VS Code\bin;C:\Users\sesa213338\AppData\Local\Microsoft\WindowsApps;C:\Users\sesa213338\AppData\Local\Box\Box Edit\;C:\Users\sesa213338\AppData\Local\atom\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\sesa213338\AppData\Local\Microsoft\WindowsApps;C:\Users\sesa213338\AppData\Local\Yarn\bin;C:\Program Files\Microsoft VS Code Insiders\bin;C:\Users\sesa213338\AppData\Roaming\npm
 
 Yarn version: 
-  1.3.2
+  1.5.1
 
 Node version: 
-  8.7.0
+  8.10.0
 
 Platform: 
   win32 x64
@@ -21,12 +21,14 @@ npm manifest:
     "scripts": {
       "ng": "ng",
       "start": "ng serve",
-      "build": "ng build",
+      "build": "ng build --prod",
       "test": "ng test",
       "lint": "ng lint",
       "e2e": "ng e2e",
+      "build-demo": "npm-run-all build del-ghpage copy-ghpage:dist",
+      "copy-ghpage:dist": "cross-env copyfiles --up 1 dist-demo/**/*.* ../Angular-Slickgrid-GhPages/",
       "copy:i18n": "cross-env copyfiles -f node_modules/angular-slickgrid/i18n/*.json src/assets/i18n",
-      "del-pack": "cross-env del *.tgz"
+      "del-ghpage": "cross-env del ../Angular-Slickgrid-GhPages/*.*"
     },
     "private": true,
     "dependencies": {
@@ -41,7 +43,7 @@ npm manifest:
       "@angular/router": "^5.1.1",
       "@ngx-translate/core": "9.1.1",
       "@ngx-translate/http-loader": "2.0.0",
-      "angular-slickgrid": "^0.10.0",
+      "angular-slickgrid": "^0.14.1",
       "bootstrap": "^3.3.7",
       "copyfiles": "^1.2.0",
       "core-js": "^2.4.1",
@@ -50,7 +52,7 @@ npm manifest:
       "jquery": "^3.2.1",
       "moment": "^2.19.1",
       "rxjs": "^5.5.5",
-      "slickgrid": "^2.3.12",
+      "text-encoding-utf-8": "^1.0.2",
       "zone.js": "^0.8.14"
     },
     "devDependencies": {
@@ -71,6 +73,7 @@ npm manifest:
       "karma-jasmine": "~1.1.0",
       "karma-jasmine-html-reporter": "^0.2.2",
       "node-sass": "^4.7.2",
+      "npm-run-all": "^4.1.1",
       "protractor": "~5.1.2",
       "ts-node": "~3.2.0",
       "tslint": "~5.3.2",
@@ -393,9 +396,9 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   
-  angular-slickgrid@^0.8.0:
-    version "0.8.0"
-    resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.8.0.tgz#a56fea0821ccd3a4419ed98f9af69efc07dc8c8a"
+  angular-slickgrid@^0.13.7:
+    version "0.13.7"
+    resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.13.7.tgz#0f34a42c50d8314dbe86f37cf52b97be3db28f30"
     dependencies:
       "@ngx-translate/core" "^9.1.1"
       "@ngx-translate/http-loader" "^2.0.0"
@@ -404,9 +407,13 @@ Lockfile:
       flatpickr "^4.0.6"
       font-awesome "^4.7.0"
       jquery "^3.2.1"
+      jquery-ui-dist "^1.12.1"
       lodash "^4.17.4"
-      moment-mini "^2.18.1"
-      slickgrid "^2.3.12"
+      moment-mini "^2.19.4"
+      rimraf "^2.6.2"
+      slickgrid "2.3.15"
+      text-encoding-utf-8 "^1.0.2"
+      tslib "^1.7.1"
       vinyl-paths "^2.1.0"
   
   ansi-align@^2.0.0:
@@ -434,6 +441,12 @@ Lockfile:
   ansi-styles@^3.1.0:
     version "3.2.0"
     resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.0.tgz#c159b8d5be0f9e5a6f346dab94f16ce022161b88"
+    dependencies:
+      color-convert "^1.9.0"
+  
+  ansi-styles@^3.2.0:
+    version "3.2.1"
+    resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
     dependencies:
       color-convert "^1.9.0"
   
@@ -481,6 +494,10 @@ Lockfile:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/arr-flatten/-/arr-flatten-1.1.0.tgz#36048bbff4e7b47e136644316c99669ea5ae91f1"
   
+  array-filter@~0.0.0:
+    version "0.0.1"
+    resolved "https://registry.yarnpkg.com/array-filter/-/array-filter-0.0.1.tgz#7da8cf2e26628ed732803581fd21f67cacd2eeec"
+  
   array-find-index@^1.0.1:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/array-find-index/-/array-find-index-1.0.2.tgz#df010aa1287e164bbda6f9723b0a96a1ec4187a1"
@@ -499,6 +516,14 @@ Lockfile:
     dependencies:
       define-properties "^1.1.2"
       es-abstract "^1.7.0"
+  
+  array-map@~0.0.0:
+    version "0.0.0"
+    resolved "https://registry.yarnpkg.com/array-map/-/array-map-0.0.0.tgz#88a2bab73d1cf7bcd5c1b118a003f66f665fa662"
+  
+  array-reduce@~0.0.0:
+    version "0.0.0"
+    resolved "https://registry.yarnpkg.com/array-reduce/-/array-reduce-0.0.0.tgz#173899d3ffd1c7d9383e4479525dbe278cab5f2b"
   
   array-slice@^0.2.3:
     version "0.2.3"
@@ -1833,6 +1858,10 @@ Lockfile:
     version "0.1.4"
     resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
   
+  duplexer@~0.1.1:
+    version "0.1.1"
+    resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"
+  
   duplexify@^3.1.2, duplexify@^3.4.2:
     version "3.5.1"
     resolved "https://registry.yarnpkg.com/duplexify/-/duplexify-3.5.1.tgz#4e1516be68838bc90a49994f0b39a6e5960befcd"
@@ -1958,13 +1987,13 @@ Lockfile:
     dependencies:
       prr "~1.0.1"
   
-  error-ex@^1.2.0:
+  error-ex@^1.2.0, error-ex@^1.3.1:
     version "1.3.1"
     resolved "https://registry.yarnpkg.com/error-ex/-/error-ex-1.3.1.tgz#f855a86ce61adc4e8621c3cda21e7a7612c3a8dc"
     dependencies:
       is-arrayish "^0.2.1"
   
-  es-abstract@^1.7.0:
+  es-abstract@^1.4.3, es-abstract@^1.7.0:
     version "1.10.0"
     resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.10.0.tgz#1ecb36c197842a00d8ee4c2dfd8646bb97d60864"
     dependencies:
@@ -2084,6 +2113,18 @@ Lockfile:
     dependencies:
       d "1"
       es5-ext "~0.10.14"
+  
+  event-stream@~3.3.0:
+    version "3.3.4"
+    resolved "https://registry.yarnpkg.com/event-stream/-/event-stream-3.3.4.tgz#4ab4c9a0f5a54db9338b4c34d86bfce8f4b35571"
+    dependencies:
+      duplexer "~0.1.1"
+      from "~0"
+      map-stream "~0.1.0"
+      pause-stream "0.0.11"
+      split "0.3"
+      stream-combiner "~0.0.4"
+      through "~2.3.1"
   
   eventemitter3@1.x.x:
     version "1.2.0"
@@ -2384,6 +2425,10 @@ Lockfile:
     dependencies:
       inherits "^2.0.1"
       readable-stream "^2.0.0"
+  
+  from@~0:
+    version "0.1.7"
+    resolved "https://registry.yarnpkg.com/from/-/from-0.1.7.tgz#83c60afc58b9c56997007ed1a768b3ab303a44fe"
   
   fs-access@^1.0.0:
     version "1.0.1"
@@ -3312,6 +3357,10 @@ Lockfile:
     version "2.2.0"
     resolved "https://registry.yarnpkg.com/jasminewd2/-/jasminewd2-2.2.0.tgz#e37cf0b17f199cce23bea71b2039395246b4ec4e"
   
+  jquery-ui-dist@^1.12.1:
+    version "1.12.1"
+    resolved "https://registry.yarnpkg.com/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz#5c0815d3cc6f90ff5faaf5b268a6e23b4ca904fa"
+  
   jquery-ui@>=1.8.0:
     version "1.12.1"
     resolved "https://registry.yarnpkg.com/jquery-ui/-/jquery-ui-1.12.1.tgz#bcb4045c8dd0539c134bc1488cdd3e768a7a9e51"
@@ -3357,6 +3406,10 @@ Lockfile:
   json-loader@^0.5.4:
     version "0.5.7"
     resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
+  
+  json-parse-better-errors@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.1.tgz#50183cd1b2d25275de069e9e71b467ac9eab973a"
   
   json-schema-traverse@^0.3.0:
     version "0.3.1"
@@ -3563,6 +3616,15 @@ Lockfile:
       pify "^2.0.0"
       strip-bom "^3.0.0"
   
+  load-json-file@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-4.0.0.tgz#2f5f45ab91e33216234fd53adab668eb4ec0993b"
+    dependencies:
+      graceful-fs "^4.1.2"
+      parse-json "^4.0.0"
+      pify "^3.0.0"
+      strip-bom "^3.0.0"
+  
   loader-runner@^2.3.0:
     version "2.3.0"
     resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"
@@ -3702,6 +3764,10 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
   
+  map-stream@~0.1.0:
+    version "0.1.0"
+    resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.1.0.tgz#e56aa94c4c8055a16404a0674b78f215f7c8e194"
+  
   math-expression-evaluator@^1.2.14:
     version "1.2.17"
     resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"
@@ -3737,6 +3803,10 @@ Lockfile:
     dependencies:
       errno "^0.1.3"
       readable-stream "^2.0.1"
+  
+  memorystream@^0.3.1:
+    version "0.3.1"
+    resolved "https://registry.yarnpkg.com/memorystream/-/memorystream-0.3.1.tgz#86d7090b30ce455d63fbae12dda51a47ddcaf9b2"
   
   meow@^3.3.0, meow@^3.6.0, meow@^3.7.0:
     version "3.7.0"
@@ -3862,9 +3932,9 @@ Lockfile:
     dependencies:
       minimist "0.0.8"
   
-  moment-mini@^2.18.1:
-    version "2.18.1"
-    resolved "https://registry.yarnpkg.com/moment-mini/-/moment-mini-2.18.1.tgz#2734cc2cd7bfd40d598c2071cc9c96cb399789d7"
+  moment-mini@^2.19.4:
+    version "2.19.4"
+    resolved "https://registry.yarnpkg.com/moment-mini/-/moment-mini-2.19.4.tgz#1af472aebf97f7d219280b4d02dfc3b34359e45d"
   
   moment@^2.19.1:
     version "2.19.1"
@@ -4088,6 +4158,20 @@ Lockfile:
       query-string "^4.1.0"
       sort-keys "^1.0.0"
   
+  npm-run-all@^4.1.1:
+    version "4.1.2"
+    resolved "https://registry.yarnpkg.com/npm-run-all/-/npm-run-all-4.1.2.tgz#90d62d078792d20669139e718621186656cea056"
+    dependencies:
+      ansi-styles "^3.2.0"
+      chalk "^2.1.0"
+      cross-spawn "^5.1.0"
+      memorystream "^0.3.1"
+      minimatch "^3.0.4"
+      ps-tree "^1.1.0"
+      read-pkg "^3.0.0"
+      shell-quote "^1.6.1"
+      string.prototype.padend "^3.0.0"
+  
   npm-run-path@^2.0.0:
     version "2.0.2"
     resolved "https://registry.yarnpkg.com/npm-run-path/-/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
@@ -4294,6 +4378,13 @@ Lockfile:
     dependencies:
       error-ex "^1.2.0"
   
+  parse-json@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/parse-json/-/parse-json-4.0.0.tgz#be35f5425be1f7f6c747184f98a788cb99477ee0"
+    dependencies:
+      error-ex "^1.3.1"
+      json-parse-better-errors "^1.0.1"
+  
   parse-passwd@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/parse-passwd/-/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
@@ -4373,6 +4464,12 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/path-type/-/path-type-3.0.0.tgz#cef31dc8e0a1a3bb0d105c0cd97cf3bf47f4e36f"
     dependencies:
       pify "^3.0.0"
+  
+  pause-stream@0.0.11:
+    version "0.0.11"
+    resolved "https://registry.yarnpkg.com/pause-stream/-/pause-stream-0.0.11.tgz#fe5a34b0cbce12b5aa6a2b403ee2e73b602f1445"
+    dependencies:
+      through "~2.3"
   
   pbkdf2@^3.0.3:
     version "3.0.14"
@@ -4795,6 +4892,12 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/prr/-/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
   
+  ps-tree@^1.1.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/ps-tree/-/ps-tree-1.1.0.tgz#b421b24140d6203f1ed3c76996b4427b08e8c014"
+    dependencies:
+      event-stream "~3.3.0"
+  
   pseudomap@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
@@ -4947,6 +5050,14 @@ Lockfile:
       load-json-file "^2.0.0"
       normalize-package-data "^2.3.2"
       path-type "^2.0.0"
+  
+  read-pkg@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/read-pkg/-/read-pkg-3.0.0.tgz#9cbc686978fee65d16c00e2b19c237fcf6e38389"
+    dependencies:
+      load-json-file "^4.0.0"
+      normalize-package-data "^2.3.2"
+      path-type "^3.0.0"
   
   "readable-stream@1 || 2", readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.4, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.2.6, readable-stream@^2.2.9:
     version "2.3.3"
@@ -5201,7 +5312,7 @@ Lockfile:
     dependencies:
       align-text "^0.1.1"
   
-  rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.2, rimraf@^2.5.4, rimraf@^2.6.0, rimraf@^2.6.1:
+  rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.2, rimraf@^2.5.4, rimraf@^2.6.0, rimraf@^2.6.1, rimraf@^2.6.2:
     version "2.6.2"
     resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
     dependencies:
@@ -5426,6 +5537,15 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   
+  shell-quote@^1.6.1:
+    version "1.6.1"
+    resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.6.1.tgz#f4781949cce402697127430ea3b3c5476f481767"
+    dependencies:
+      array-filter "~0.0.0"
+      array-map "~0.0.0"
+      array-reduce "~0.0.0"
+      jsonify "~0.0.0"
+  
   signal-exit@^3.0.0, signal-exit@^3.0.2:
     version "3.0.2"
     resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
@@ -5440,9 +5560,9 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
   
-  slickgrid@^2.3.12:
-    version "2.3.12"
-    resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.12.tgz#f509cd3e6f024371cd3d1fa7e991826466826f87"
+  slickgrid@2.3.15:
+    version "2.3.15"
+    resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.15.tgz#ceeae99e5733a19849df19508661c55b1b6da64d"
     dependencies:
       jquery ">=1.8.0"
       jquery-ui ">=1.8.0"
@@ -5606,6 +5726,12 @@ Lockfile:
       select-hose "^2.0.0"
       spdy-transport "^2.0.18"
   
+  split@0.3:
+    version "0.3.3"
+    resolved "https://registry.yarnpkg.com/split/-/split-0.3.3.tgz#cd0eea5e63a211dfff7eb0f091c4133e2d0dd28f"
+    dependencies:
+      through "2"
+  
   sprintf-js@^1.0.3:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.1.1.tgz#36be78320afe5801f6cea3ee78b6e5aab940ea0c"
@@ -5651,6 +5777,12 @@ Lockfile:
       inherits "~2.0.1"
       readable-stream "^2.0.2"
   
+  stream-combiner@~0.0.4:
+    version "0.0.4"
+    resolved "https://registry.yarnpkg.com/stream-combiner/-/stream-combiner-0.0.4.tgz#4d5e433c185261dde623ca3f44c586bcf5c4ad14"
+    dependencies:
+      duplexer "~0.1.1"
+  
   stream-each@^1.1.0:
     version "1.2.2"
     resolved "https://registry.yarnpkg.com/stream-each/-/stream-each-1.2.2.tgz#8e8c463f91da8991778765873fe4d960d8f616bd"
@@ -5690,6 +5822,14 @@ Lockfile:
     dependencies:
       is-fullwidth-code-point "^2.0.0"
       strip-ansi "^4.0.0"
+  
+  string.prototype.padend@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/string.prototype.padend/-/string.prototype.padend-3.0.0.tgz#f3aaef7c1719f170c5eab1c32bf780d96e21f2f0"
+    dependencies:
+      define-properties "^1.1.2"
+      es-abstract "^1.4.3"
+      function-bind "^1.0.2"
   
   string_decoder@^0.10.25, string_decoder@~0.10.x:
     version "0.10.31"
@@ -5829,6 +5969,10 @@ Lockfile:
     dependencies:
       execa "^0.7.0"
   
+  text-encoding-utf-8@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/text-encoding-utf-8/-/text-encoding-utf-8-1.0.2.tgz#585b62197b0ae437e3c7b5d0af27ac1021e10d13"
+  
   through2@^2.0.0, through2@^2.0.1:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
@@ -5836,7 +5980,7 @@ Lockfile:
       readable-stream "^2.1.5"
       xtend "~4.0.1"
   
-  through@X.X.X:
+  through@2, through@X.X.X, through@~2.3, through@~2.3.1:
     version "2.3.8"
     resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   
@@ -6641,13 +6785,13 @@ Lockfile:
 
 Trace: 
   Error: http://registry.npmjs.org/angular-slickgrid: Request "http://registry.npmjs.org/angular-slickgrid" returned a 403
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:62104:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:123085:22)
-      at emitTwo (events.js:125:13)
-      at Request.emit (events.js:213:7)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:124068:10)
-      at emitOne (events.js:115:13)
-      at Request.emit (events.js:210:7)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:123988:12)
-      at Object.onceWrapper (events.js:314:30)
-      at emitNone (events.js:110:20)
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:65025:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:132430:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:133413:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:133333:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)

@@ -29,8 +29,7 @@ export class SwtCommonGridTestComponent implements OnInit, AfterViewInit {
     constructor(private httpClient: HttpClient,
             private viewContainerRef: ViewContainerRef,
             private componentFactoryResolver: ComponentFactoryResolver) {
-        this.logger = new Logger('test', null);
-
+        this.logger = new Logger('test', httpClient);
     }
 
     ngOnInit() {

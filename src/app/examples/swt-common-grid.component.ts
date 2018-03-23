@@ -152,7 +152,6 @@ export class SwtCommonGridComponent implements OnInit, AfterViewInit, BackendSer
             private filterService: FilterService, private sortService: SortService, private translate: TranslateService,
             private el: ElementRef, private renderer: Renderer) {
         this.logger = new Logger('grid', httpClient);
-
         this.logger.info('method [constructor] - START/END');
     }
 
