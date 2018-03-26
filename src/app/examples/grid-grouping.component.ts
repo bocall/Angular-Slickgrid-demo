@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Column, FieldType, Formatter, Formatters, GridOption, Editors } from 'angular-slickgrid';
-
-// using external non-typed js libraries
-declare var Slick: any;
-
-// create my custom Formatter with the Formatter type
-const myCustomCheckmarkFormatter: Formatter = (row: number, cell: number, value: any, columnDef: Column, dataContext: any) =>
-  value ? `<i class="fa fa-fire" aria-hidden="true"></i>` : '<i class="fa fa-snowflake-o" aria-hidden="true"></i>';
+import { Aggregators, Column, FieldType, Formatter, Formatters, GridOption, Sorters  } from 'angular-slickgrid';
 
 @Component({
   templateUrl: './grid-grouping.component.html'
@@ -25,19 +18,15 @@ export class GridGroupingComponent implements OnInit {
   dataset: any[];
   gridObj: any;
   dataviewObj: any;
-  sortcol = 'title';
-  sortdir = 1;
-  percentCompleteThreshold = 0;
-  prevPercentCompleteThreshold = 0;
 
   ngOnInit(): void {
     this.columnDefinitions = [
       { id: 'sel', name: '#', field: 'num', width: 40, maxWidth: 70, resizable: true, selectable: false, focusable: false },
-      { id: 'title', name: 'Title', field: 'title', width: 70, minWidth: 50, cssClass: 'cell-title', sortable: true, editor: Editors.text },
-      { id: 'duration', name: 'Duration', field: 'duration', width: 70, sortable: true, groupTotalsFormatter: this.sumTotalsFormatter },
+      { id: 'title', name: 'Title', field: 'title', width: 70, minWidth: 50, cssClass: 'cell-title', sortable: true },
+      { id: 'duration', name: 'Duration', field: 'duration', width: 70, sortable: true, type: FieldType.number, groupTotalsFormatter: this.sumTotalsFormatter },
       { id: '%', name: '% Complete', field: 'percentComplete', width: 80, formatter: Formatters.percentCompleteBar, sortable: true, groupTotalsFormatter: this.avgTotalsFormatter },
-      { id: 'start', name: 'Start', field: 'start', minWidth: 60, sortable: true, formatter: Formatters.dateIso },
-      { id: 'finish', name: 'Finish', field: 'finish', minWidth: 60, sortable: true, formatter: Formatters.dateIso },
+      { id: 'start', name: 'Start', field: 'start', minWidth: 60, sortable: true, formatter: Formatters.dateIso, exportWithFormatter: true },
+      { id: 'finish', name: 'Finish', field: 'finish', minWidth: 60, sortable: true, formatter: Formatters.dateIso, exportWithFormatter: true },
       { id: 'cost', name: 'Cost', field: 'cost', width: 90, sortable: true, groupTotalsFormatter: this.sumTotalsFormatter },
       { id: 'effort-driven', name: 'Effort Driven', width: 80, minWidth: 20, maxWidth: 80, cssClass: 'cell-effort-driven', field: 'effortDriven', formatter: Formatters.checkmark, sortable: true }
     ];
@@ -99,27 +88,19 @@ export class GridGroupingComponent implements OnInit {
   avgTotalsFormatter(totals, columnDef) {
     const val = totals.avg && totals.avg[columnDef.field];
     if (val != null) {
-      return 'avg: ' + Math.round(val) + '%';
+      return `Avg: ${Math.round(val)}%`;
     }
     return '';
   }
+
   sumTotalsFormatter(totals, columnDef) {
     const val = totals.sum && totals.sum[columnDef.field];
     if (val != null) {
-      return 'total: ' + ((Math.round(parseFloat(val) * 100) / 100));
+      return `Total: ${((Math.round(parseFloat(val) * 100) / 100))}`;
     }
     return '';
   }
-  myFilter(item, args) {
-    return item['percentComplete'] >= args.percentComplete;
-  }
-  percentCompleteSort(a, b) {
-    return a['percentComplete'] - b['percentComplete'];
-  }
-  comparer(a: any, b: any) {
-    const x = a[this.sortcol], y = b[this.sortcol];
-    return (x === y ? 0 : (x > y ? 1 : -1));
-  }
+
   groupByDuration() {
     this.dataviewObj.setGrouping({
       getter: 'duration',
@@ -127,13 +108,17 @@ export class GridGroupingComponent implements OnInit {
         return `Duration:  ${g.value} <span style="color:green">(${g.count} items)</span>`;
       },
       aggregators: [
-        new Slick.Data.Aggregators.Avg('percentComplete'),
-        new Slick.Data.Aggregators.Sum('cost')
+        new Aggregators.avg('percentComplete'),
+        new Aggregators.sum('cost')
       ],
+      comparer: (a, b) => {
+        return Sorters.numeric(a.value, b.value, 1);
+      },
       aggregateCollapsed: false,
       lazyTotalsCalculation: true
     });
   }
+
   groupByDurationOrderByCount(aggregateCollapsed) {
     this.dataviewObj.setGrouping({
       getter: 'duration',
@@ -144,13 +129,14 @@ export class GridGroupingComponent implements OnInit {
         return a.count - b.count;
       },
       aggregators: [
-        new Slick.Data.Aggregators.Avg('percentComplete'),
-        new Slick.Data.Aggregators.Sum('cost')
+        new Aggregators.avg('percentComplete'),
+        new Aggregators.sum('cost')
       ],
       aggregateCollapsed,
       lazyTotalsCalculation: true
     });
   }
+
   groupByDurationEffortDriven() {
     this.dataviewObj.setGrouping([
       {
@@ -159,8 +145,8 @@ export class GridGroupingComponent implements OnInit {
           return `Duration:  ${g.value}  <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Slick.Data.Aggregators.Sum('duration'),
-          new Slick.Data.Aggregators.Sum('cost')
+          new Aggregators.sum('duration'),
+          new Aggregators.sum('cost')
         ],
         aggregateCollapsed: true,
         lazyTotalsCalculation: true
@@ -171,14 +157,15 @@ export class GridGroupingComponent implements OnInit {
           return `Effort-Driven:  ${(g.value ? 'True' : 'False')} <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Slick.Data.Aggregators.Avg('percentComplete'),
-          new Slick.Data.Aggregators.Sum('cost')
+          new Aggregators.avg('percentComplete'),
+          new Aggregators.sum('cost')
         ],
         collapsed: true,
         lazyTotalsCalculation: true
       }
     ]);
   }
+
   groupByDurationEffortDrivenPercent() {
     this.dataviewObj.setGrouping([
       {
@@ -187,8 +174,8 @@ export class GridGroupingComponent implements OnInit {
           return `Duration:  ${g.value}  <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Slick.Data.Aggregators.Sum('duration'),
-          new Slick.Data.Aggregators.Sum('cost')
+          new Aggregators.sum('duration'),
+          new Aggregators.sum('cost')
         ],
         aggregateCollapsed: true,
         lazyTotalsCalculation: true
@@ -199,8 +186,8 @@ export class GridGroupingComponent implements OnInit {
           return `Effort-Driven:  ${(g.value ? 'True' : 'False')}  <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Slick.Data.Aggregators.Sum('duration'),
-          new Slick.Data.Aggregators.Sum('cost')
+          new Aggregators.sum('duration'),
+          new Aggregators.sum('cost')
         ],
         lazyTotalsCalculation: true
       },
@@ -210,7 +197,7 @@ export class GridGroupingComponent implements OnInit {
           return `% Complete:  ${g.value}  <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Slick.Data.Aggregators.Avg('percentComplete')
+          new Aggregators.avg('percentComplete')
         ],
         aggregateCollapsed: true,
         collapsed: true,
