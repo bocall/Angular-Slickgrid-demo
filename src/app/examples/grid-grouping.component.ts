@@ -166,8 +166,8 @@ export class GridGroupingComponent implements OnInit, OnDestroy {
         return `Duration:  ${g.value} <span style="color:green">(${g.count} items)</span>`;
       },
       aggregators: [
-        new Aggregators.avg('percentComplete'),
-        new Aggregators.sum('cost')
+        new Aggregators.Avg('percentComplete'),
+        new Aggregators.Sum('cost')
       ],
       comparer: (a, b) => Sorters.numeric(a.value, b.value, SortDirectionNumber.asc),
       aggregateCollapsed: false,
@@ -185,8 +185,8 @@ export class GridGroupingComponent implements OnInit, OnDestroy {
         return a.count - b.count;
       },
       aggregators: [
-        new Aggregators.avg('percentComplete'),
-        new Aggregators.sum('cost')
+        new Aggregators.Avg('percentComplete'),
+        new Aggregators.Sum('cost')
       ],
       aggregateCollapsed,
       lazyTotalsCalculation: true
@@ -201,8 +201,8 @@ export class GridGroupingComponent implements OnInit, OnDestroy {
           return `Duration:  ${g.value}  <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Aggregators.sum('duration'),
-          new Aggregators.sum('cost')
+          new Aggregators.Sum('duration'),
+          new Aggregators.Sum('cost')
         ],
         aggregateCollapsed: true,
         lazyTotalsCalculation: true
@@ -213,8 +213,8 @@ export class GridGroupingComponent implements OnInit, OnDestroy {
           return `Effort-Driven:  ${(g.value ? 'True' : 'False')} <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Aggregators.avg('percentComplete'),
-          new Aggregators.sum('cost')
+          new Aggregators.Avg('percentComplete'),
+          new Aggregators.Sum('cost')
         ],
         collapsed: true,
         lazyTotalsCalculation: true
@@ -230,8 +230,8 @@ export class GridGroupingComponent implements OnInit, OnDestroy {
           return `Duration:  ${g.value}  <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Aggregators.sum('duration'),
-          new Aggregators.sum('cost')
+          new Aggregators.Sum('duration'),
+          new Aggregators.Sum('cost')
         ],
         aggregateCollapsed: true,
         lazyTotalsCalculation: true
@@ -242,8 +242,8 @@ export class GridGroupingComponent implements OnInit, OnDestroy {
           return `Effort-Driven:  ${(g.value ? 'True' : 'False')}  <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Aggregators.sum('duration'),
-          new Aggregators.sum('cost')
+          new Aggregators.Sum('duration'),
+          new Aggregators.Sum('cost')
         ],
         lazyTotalsCalculation: true
       },
@@ -253,7 +253,7 @@ export class GridGroupingComponent implements OnInit, OnDestroy {
           return `% Complete:  ${g.value}  <span style="color:green">(${g.count} items)</span>`;
         },
         aggregators: [
-          new Aggregators.avg('percentComplete')
+          new Aggregators.Avg('percentComplete')
         ],
         aggregateCollapsed: true,
         collapsed: true,
