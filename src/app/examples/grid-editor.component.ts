@@ -22,11 +22,15 @@ declare var Slick: any;
 export class GridEditorComponent implements OnInit, OnDestroy {
   title = 'Example 3: Editors';
   subTitle = `
-  Grid with Inline Editors and onCellClick actions (<a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Editors" target="_blank">Wiki link</a>).
+  Grid with Inline Editors and onCellClick actions (<a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Editors" target="_blank">Wiki docs</a>).
   <ul>
     <li>When using "enableCellNavigation: true", clicking on a cell will automatically make it active &amp; selected.</li>
     <ul><li>If you don't want this behavior, then you should disable "enableCellNavigation"</li></ul>
     <li>Inline Editors requires "enableCellNavigation: true" (not sure why though)</li>
+    <li>
+        Support Excel Copy Buffer (SlickGrid Copy Manager Plugin), you can use it by simply enabling "enableExcelCopyBuffer" flag.
+        Note that it will only evaluate Formatter when the "exportWithFormatter" flag is enabled (through "ExportOptions" or the column definition)
+    </li>
   </ul>
   `;
 
@@ -107,7 +111,11 @@ export class GridEditorComponent implements OnInit, OnDestroy {
       minWidth: 100,
       params: {
         formatters: [ Formatters.collection, Formatters.percentCompleteBar ],
-        collection: Array.from(Array(101).keys()).map(k => ({ value: k, label: k }))
+        collection: Array.from(Array(101).keys()).map(k => ({ value: k, label: k })),
+        collectionSortBy: {
+          property: 'label',
+          sortDesc: true
+        },
       }
     }, {
       id: 'start',
@@ -164,8 +172,9 @@ export class GridEditorComponent implements OnInit, OnDestroy {
         sidePadding: 15
       },
       editable: true,
-      enableColumnPicker: true,
       enableCellNavigation: true,
+      enableColumnPicker: true,
+      enableExcelCopyBuffer: true,
       editCommandHandler: (item, column, editCommand) => {
         this._commandQueue.push(editCommand);
         editCommand.execute();

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Column, FieldType, Formatter, Formatters, GridOption } from 'angular-slickgrid';
-import * as $ from 'jquery';
+import { Column, GridOption } from 'angular-slickgrid';
 
 // create a custom Formatter to highlight negative values in red
 const columnsWithHighlightingById = {};
@@ -20,7 +19,7 @@ export class GridHeaderButtonComponent implements OnInit {
   subTitle = `
     This example demonstrates using the <b>Slick.Plugins.HeaderButtons</b> plugin to easily add buttons to colum headers.
     These buttons can be specified directly in the column definition, and are very easy to configure and use.
-    (<a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/SlickGrid-Plugins" target="_blank">Wiki link</a>)
+    (<a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Header-Menu-&-Header-Buttons" target="_blank">Wiki docs</a>)
     <ul>
       <li>Resize the 1st column to see all icon/command</li>
       <li>Mouse hover the 2nd column to see it's icon/command</li>
