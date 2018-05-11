@@ -100,6 +100,7 @@ export class GridEditorComponent implements OnInit, OnDestroy {
       sortable: true,
       type: FieldType.number,
       editor: Editors.float,
+      params: { decimalPlaces: 2 },
       minWidth: 100
     }, {
       id: 'complete',
