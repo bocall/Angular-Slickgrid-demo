@@ -309,9 +309,9 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-angular-slickgrid@^0.16.7:
-  version "0.16.7"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.16.7.tgz#596504a5619d05f9ccab122ed261dca1793ed756"
+angular-slickgrid@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-0.17.0.tgz#33f40ab5273a429ebec650210569623effb74df2"
   dependencies:
     "@ngx-translate/core" "^9.1.1"
     "@ngx-translate/http-loader" "^2.0.0"
