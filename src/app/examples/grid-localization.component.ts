@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import { Column, DelimiterType, Editors, ExportService, FieldType, FileType, FilterType, Formatter, Formatters, GridExtraService, GridExtraUtils, GridOption, OnEventArgs, ResizerService } from 'angular-slickgrid';
 import { TranslateService } from '@ngx-translate/core';
+import { AngularGridInstance, Column, DelimiterType, FileType, FilterType, Formatter, Formatters, GridOption } from 'angular-slickgrid';
 
 @Component({
   templateUrl: './grid-localization.component.html'
@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Injectable()
 export class GridLocalizationComponent implements OnInit {
   title = 'Example 12: Localization (i18n)';
-  subTitle = `Support multiple locales with the i18next plugin, following these steps (<a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Localization" target="_blank">Wiki docs</a>)
+  subTitle = `Support multiple locales with the ngx-translate plugin, following these steps (<a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Localization" target="_blank">Wiki docs</a>)
   <ol class="small">
     <li>You first need to "enableTranslate" in the Grid Options</li>
     <li>In the Column Definitions, you have following options</li>
@@ -17,7 +17,7 @@ export class GridLocalizationComponent implements OnInit {
       <li>For the cell values, you need to use a Formatter, there's 2 ways of doing it</li>
       <ul>
         <li>formatter: myCustomTranslateFormatter <b>&lt;= "Title" column uses it</b></li>
-        <li>formatter: Formatters.translate, params: { i18n: this.translateService } <b>&lt;= "Completed" column uses it</b></li>
+        <li>formatter: Formatters.translate, i18n: this.translateService <b>&lt;= "Completed" column uses it</b></li>
       </ul>
     </ul>
     <li>For date localization, you need to create your own custom formatter. </li>
@@ -34,13 +34,14 @@ export class GridLocalizationComponent implements OnInit {
     </ol>
   `;
 
+  angularGrid: AngularGridInstance;
   columnDefinitions: Column[];
   gridOptions: GridOption;
   dataset: any[];
   selectedLanguage: string;
   duplicateTitleHeaderCount = 1;
 
-  constructor(private exportService: ExportService, private translate: TranslateService) {
+  constructor(private translate: TranslateService) {
     this.selectedLanguage = this.translate.getDefaultLang();
   }
 
@@ -84,25 +85,24 @@ export class GridLocalizationComponent implements OnInit {
       // OR via your own custom translate formatter
       // { id: 'completed', name: 'Completed', field: 'completed', headerKey: 'COMPLETED', formatter: translateFormatter, sortable: true, minWidth: 100 }
     ];
-
     this.gridOptions = {
       autoResize: {
         containerId: 'demo-container',
         sidePadding: 15
       },
       enableAutoResize: true,
+      enableExcelCopyBuffer: true,
       enableFiltering: true,
       enableTranslate: true,
+      i18n: this.translate,
       exportOptions: {
         // set at the grid option level, meaning all column will evaluate the Formatter (when it has a Formatter defined)
         exportWithFormatter: true,
+        sanitizeDataExport: true
       },
       gridMenu: {
-        showExportCsvCommand: true,           // true by default, so it's optional
-        showExportTextDelimitedCommand: true  // false by default, so if you want it, you will need to enable it
-      },
-      params: {
-        i18n: this.translate
+        hideExportCsvCommand: false,           // false by default, so it's optional
+        hideExportTextDelimitedCommand: false  // true by default, so if you want it, you will need to disable the flag
       }
     };
 
@@ -129,6 +129,10 @@ export class GridLocalizationComponent implements OnInit {
     }
   }
 
+  angularGridReady(angularGrid: any) {
+    this.angularGrid = angularGrid;
+  }
+
   dynamicallyAddTitleHeader() {
     const newCol = { id: `title${this.duplicateTitleHeaderCount++}`, field: 'id', headerKey: 'TITLE', formatter: this.taskTranslateFormatter, sortable: true, minWidth: 100, filterable: true, params: { useFormatterOuputToFilter: true } };
     this.columnDefinitions.push(newCol);
@@ -136,7 +140,7 @@ export class GridLocalizationComponent implements OnInit {
   }
 
   exportToFile(type = 'csv') {
-    this.exportService.exportToFile({
+    this.angularGrid.exportService.exportToFile({
       delimiter: (type === 'csv') ? DelimiterType.comma : DelimiterType.tab,
       filename: 'myExport',
       format: (type === 'csv') ? FileType.csv : FileType.txt

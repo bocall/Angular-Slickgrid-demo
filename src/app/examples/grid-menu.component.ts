@@ -1,21 +1,9 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import { Column, FieldType, FilterType, FilterService, Formatter, Formatters, GridOption } from 'angular-slickgrid';
-import * as $ from 'jquery';
-
-// create a custom Formatter to highlight negative values in red
-const columnsWithHighlightingById = {};
-const highlightingFormatter = (row, cell, value, columnDef, dataContext) => {
-  if (columnsWithHighlightingById[columnDef.id] && value < 0) {
-    return `<div style="color:red; font-weight:bold;">${value}</div>`;
-  } else {
-    return value;
-  }
-};
+import { AngularGridInstance, Column, FieldType, FilterType, Formatters, GridOption } from 'angular-slickgrid';
 
 @Component({
   templateUrl: './grid-menu.component.html'
 })
-@Injectable()
 export class GridMenuComponent implements OnInit {
   title = 'Example 9: Grid Menu Control';
   subTitle = `
@@ -31,14 +19,13 @@ export class GridMenuComponent implements OnInit {
     </ul>
   `;
 
+  angularGrid: AngularGridInstance;
   columnDefinitions: Column[];
   gridOptions: GridOption;
   dataset: any[];
   gridObj: any;
   dataviewObj: any;
   visibleColumns: Column[];
-
-  constructor(private filterService: FilterService) {}
 
   ngOnInit(): void {
     this.columnDefinitions = [
@@ -57,9 +44,10 @@ export class GridMenuComponent implements OnInit {
           collection: [{ value: '', label: '' }, { value: true, label: 'true' }, { value: false, label: 'false' }],
           type: FilterType.singleSelect,
           filterOptions: {
-            offsetLet: 14,
+            // you can add "multiple-select" plugin options like styling the first row
+            offsetLeft: 14,
             width: 100
-          }
+          },
         }
       }
     ];
@@ -67,6 +55,13 @@ export class GridMenuComponent implements OnInit {
     this.visibleColumns = this.columnDefinitions;
 
     this.gridOptions = {
+      columnPicker: {
+        hideForceFitButton: true,
+        hideSyncResizeButton: true,
+        onColumnsChanged: (e, args) => {
+          console.log('Column selection changed from Column Picker, visible columns: ', args.columns);
+        }
+      },
       enableAutoResize: true,
       enableGridMenu: true,
       autoResize: {
@@ -79,6 +74,8 @@ export class GridMenuComponent implements OnInit {
         customTitle: 'Custom Commands',
         columnTitle: 'Columns',
         iconCssClass: 'fa fa-ellipsis-v',
+        hideForceFitButton: true,
+        hideSyncResizeButton: true,
         menuWidth: 17,
         resizeOnShowHeaderRow: true,
         customItems: [
@@ -86,30 +83,42 @@ export class GridMenuComponent implements OnInit {
             iconCssClass: 'fa fa-filter text-danger',
             title: 'Clear All Filters',
             disabled: false,
-            command: 'clear-filter'
+            command: 'clear-filter',
+            positionOrder: 0
+          },
+          {
+            iconCssClass: 'fa fa-unsorted text-danger',
+            title: 'Clear All Sorting',
+            disabled: false,
+            command: 'clear-sorting',
+            positionOrder: 1
           },
           {
             iconCssClass: 'fa fa-random',
             title: 'Toggle Filter Row',
             disabled: false,
-            command: 'toggle-filter'
+            command: 'toggle-filter',
+            positionOrder: 2
           },
           {
             iconCssClass: 'fa fa-random',
             title: 'Toggle Top Panel',
             disabled: false,
-            command: 'toggle-toppanel'
+            command: 'toggle-toppanel',
+            positionOrder: 3
           },
           {
             iconCssClass: 'fa fa-question-circle',
             title: 'Help',
             disabled: false,
-            command: 'help'
+            command: 'help',
+            positionOrder: 99
           },
           {
             title: 'Disabled command',
             disabled: true,
-            command: 'disabled-command'
+            command: 'disabled-command',
+            positionOrder: 98
           }
         ],
         onCommand: (e, args) => {
@@ -118,15 +127,26 @@ export class GridMenuComponent implements OnInit {
           } else if (args.command === 'toggle-toppanel') {
             this.gridObj.setTopPanelVisibility(!this.gridObj.getOptions().showTopPanel);
           } else if (args.command === 'clear-filter') {
-            this.filterService.clearFilters();
+            this.angularGrid.filterService.clearFilters();
+            this.dataviewObj.refresh();
+          } else if (args.command === 'clear-sorting') {
+            this.angularGrid.sortService.clearSorting();
+            this.dataviewObj.refresh();
           } else {
             alert('Command: ' + args.command);
           }
+        },
+        onColumnsChanged: (e, args) => {
+          console.log('Column selection changed from Grid Menu, visible columns: ', args.columns);
         }
       },
     };
 
     this.getData();
+  }
+
+  angularGridReady(angularGrid: any) {
+    this.angularGrid = angularGrid;
   }
 
   getData() {
