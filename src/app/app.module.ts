@@ -12,9 +12,9 @@ import { GridHeaderMenuComponent } from './examples/grid-headermenu.component';
 import { GridHeaderButtonComponent } from './examples/grid-headerbutton.component';
 import { GridLocalizationComponent } from './examples/grid-localization.component';
 import { GridMenuComponent } from './examples/grid-menu.component';
-import { GridOdataService } from 'angular-slickgrid';
 import { GridOdataComponent } from './examples/grid-odata.component';
 import { GridRowSelectionComponent } from './examples/grid-rowselection.component';
+import { GridStateComponent } from './examples/grid-state.component';
 import { HomeComponent } from './examples/home.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injector, APP_INITIALIZER, NgModule } from '@angular/core';
@@ -69,6 +69,7 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
     GridMenuComponent,
     GridOdataComponent,
     GridRowSelectionComponent,
+    GridStateComponent,
     SwtCommonGridTestComponent,
     SwtCommonGridPaginationComponent,
     SwtCommonGridComponent,

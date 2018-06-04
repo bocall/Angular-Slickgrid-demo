@@ -1,5 +1,15 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
-import { AngularGridInstance, Aggregators, Column, FieldType, Formatter, Formatters, GridOption, GroupTotalFormatters, SortDirectionNumber, Sorters } from 'angular-slickgrid';
+import {
+  AngularGridInstance,
+  Aggregators,
+  Column,
+  FieldType,
+  Formatters,
+  GridOption,
+  GroupTotalFormatters,
+  SortDirectionNumber,
+  Sorters
+} from 'angular-slickgrid';
 import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
