@@ -45,6 +45,9 @@ import 'core-js/es7/array';
 import 'core-js/es6/reflect';
 import 'core-js/es7/reflect';
 
+/** Support Custom Event */
+import 'custom-event-polyfill'; // npm install custom-event-polyfill
+
 
 /**
  * Required to support Web Animations `@angular/animation`.
