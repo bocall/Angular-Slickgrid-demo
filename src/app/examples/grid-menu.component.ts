@@ -1,9 +1,11 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { AngularGridInstance, Column, FieldType, Filters, Formatters, GridOption } from 'angular-slickgrid';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: './grid-menu.component.html'
 })
+@Injectable()
 export class GridMenuComponent implements OnInit {
   title = 'Example 9: Grid Menu Control';
   subTitle = `
@@ -23,19 +25,27 @@ export class GridMenuComponent implements OnInit {
   columnDefinitions: Column[];
   gridOptions: GridOption;
   dataset: any[];
-  gridObj: any;
-  dataviewObj: any;
+  selectedLanguage: string;
   visibleColumns: Column[];
+
+  constructor(private translate: TranslateService) {
+    this.selectedLanguage = this.translate.getDefaultLang();
+  }
 
   ngOnInit(): void {
     this.columnDefinitions = [
-      { id: 'title', name: 'Title', field: 'title', filterable: true, type: FieldType.string },
-      { id: 'duration', name: 'Duration', field: 'duration', sortable: true, filterable: true, type: FieldType.string },
-      { id: '%', name: '% Complete', field: 'percentComplete', sortable: true, filterable: true, type: FieldType.number },
-      { id: 'start', name: 'Start', field: 'start', filterable: true, type: FieldType.string },
-      { id: 'finish', name: 'Finish', field: 'finish', filterable: true, type: FieldType.string },
+      { id: 'title', name: 'Title', field: 'title', headerKey: 'TITLE', filterable: true, type: FieldType.string },
+      { id: 'duration', name: 'Duration', field: 'duration', headerKey: 'DURATION', sortable: true, filterable: true, type: FieldType.string },
       {
-        id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven', maxWidth: 80, formatter: Formatters.checkmark,
+        id: '%', name: '% Complete', field: 'percentComplete', sortable: true, filterable: true,
+        type: FieldType.number,
+        formatter: Formatters.percentCompleteBar,
+        filter: { model: Filters.compoundSlider, params: { hideSliderNumber: false } }
+      },
+      { id: 'start', name: 'Start', field: 'start', headerKey: 'START', filterable: true, type: FieldType.string },
+      { id: 'finish', name: 'Finish', field: 'finish', headerKey: 'FINISH', filterable: true, type: FieldType.string },
+      {
+        id: 'effort-driven', name: 'Completed', field: 'effortDriven', headerKey: 'COMPLETED', maxWidth: 80, formatter: Formatters.checkmark,
         type: FieldType.boolean,
         minWidth: 100,
         sortable: true,
@@ -71,45 +81,23 @@ export class GridMenuComponent implements OnInit {
       enableFiltering: true,
       enableCellNavigation: true,
       gridMenu: {
-        customTitle: 'Custom Commands',
-        columnTitle: 'Columns',
+        // all titles optionally support translation keys, if you wish to use that feature then use the title properties finishing by 'Key'
+        // example "customTitle" for a plain string OR "customTitleKey" to use a translation key
+        customTitleKey: 'CUSTOM_COMMANDS',
         iconCssClass: 'fa fa-ellipsis-v',
         hideForceFitButton: true,
         hideSyncResizeButton: true,
+        hideToggleFilterCommand: false, // show/hide internal custom commands
         menuWidth: 17,
         resizeOnShowHeaderRow: true,
         customItems: [
-          {
-            iconCssClass: 'fa fa-filter text-danger',
-            title: 'Clear All Filters',
-            disabled: false,
-            command: 'clear-filter',
-            positionOrder: 0
-          },
-          {
-            iconCssClass: 'fa fa-unsorted text-danger',
-            title: 'Clear All Sorting',
-            disabled: false,
-            command: 'clear-sorting',
-            positionOrder: 1
-          },
-          {
-            iconCssClass: 'fa fa-random',
-            title: 'Toggle Filter Row',
-            disabled: false,
-            command: 'toggle-filter',
-            positionOrder: 2
-          },
-          {
-            iconCssClass: 'fa fa-random',
-            title: 'Toggle Top Panel',
-            disabled: false,
-            command: 'toggle-toppanel',
-            positionOrder: 3
-          },
+          // add Custom Items Commands at the bottom of the already existing internal custom items
+          // you cannot override an internal items but you can hide them and create your own
+          // also note that the internal custom commands are in the positionOrder range of 50-60,
+          // if you want yours at the bottom then start with 61, below 50 will make your command(s) on top
           {
             iconCssClass: 'fa fa-question-circle',
-            title: 'Help',
+            titleKey: 'HELP',
             disabled: false,
             command: 'help',
             positionOrder: 99
@@ -122,24 +110,16 @@ export class GridMenuComponent implements OnInit {
           }
         ],
         onCommand: (e, args) => {
-          if (args.command === 'toggle-filter') {
-            this.gridObj.setHeaderRowVisibility(!this.gridObj.getOptions().showHeaderRow);
-          } else if (args.command === 'toggle-toppanel') {
-            this.gridObj.setTopPanelVisibility(!this.gridObj.getOptions().showTopPanel);
-          } else if (args.command === 'clear-filter') {
-            this.angularGrid.filterService.clearFilters();
-            this.dataviewObj.refresh();
-          } else if (args.command === 'clear-sorting') {
-            this.angularGrid.sortService.clearSorting();
-            this.dataviewObj.refresh();
-          } else {
-            alert('Command: ' + args.command);
+          if (args.command === 'help') {
+            alert('Please help!!!');
           }
         },
         onColumnsChanged: (e, args) => {
           console.log('Column selection changed from Grid Menu, visible columns: ', args.columns);
         }
       },
+      enableTranslate: true,
+      i18n: this.translate
     };
 
     this.getData();
@@ -166,10 +146,8 @@ export class GridMenuComponent implements OnInit {
     this.dataset = mockDataset;
   }
 
-  gridReady(grid) {
-    this.gridObj = grid;
-  }
-  dataviewReady(dataview) {
-    this.dataviewObj = dataview;
+  switchLanguage() {
+    this.selectedLanguage = (this.selectedLanguage === 'en') ? 'fr' : 'en';
+    this.translate.use(this.selectedLanguage);
   }
 }

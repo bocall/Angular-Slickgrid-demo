@@ -6,8 +6,6 @@
     <div class="col-sm-12">
         <angular-slickgrid gridId="grid2"
             (onAngularGridCreated)="angularGridReady($event)"
-            (onDataviewCreated)="dataviewReady($event)"
-            (onGridCreated)="gridReady($event)"
             [columnDefinitions]="columnDefinitions"
             [gridOptions]="gridOptions"
             [dataset]="dataset">
