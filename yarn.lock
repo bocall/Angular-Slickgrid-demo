@@ -309,9 +309,9 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-angular-slickgrid@1.2.8:
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.2.8.tgz#48136954d3f69bff1717356be3834c0ecad48b0d"
+angular-slickgrid@1.2.9:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.2.9.tgz#0e3ae978cecace469830908e34d130c8a8c1d106"
   dependencies:
     "@ngx-translate/core" "^9.1.1"
     "@ngx-translate/http-loader" "^2.0.0"
@@ -324,7 +324,7 @@ angular-slickgrid@1.2.8:
     lodash "^4.17.4"
     moment-mini "^2.19.4"
     rxjs "^5.5.8"
-    slickgrid "2.3.19"
+    slickgrid "~2.3.21"
     text-encoding-utf-8 "^1.0.2"
     tslib "^1.7.1"
     vinyl-paths "^2.1.0"
@@ -5487,9 +5487,9 @@ slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
-slickgrid@2.3.19:
-  version "2.3.19"
-  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.19.tgz#904f360907015046c7975e76f8458c7db20fe39c"
+slickgrid@~2.3.21:
+  version "2.3.21"
+  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.21.tgz#5e62d92524bc7ae5ea3fb936a2a6121001f592b0"
   dependencies:
     jquery ">=1.8.0"
     jquery-ui ">=1.8.0"
