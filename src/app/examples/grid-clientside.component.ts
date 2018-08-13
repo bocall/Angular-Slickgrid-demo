@@ -1,12 +1,14 @@
-import { CustomInputFilter } from './custom-inputFilter';
 import { Component, OnInit } from '@angular/core';
-import { AngularGridInstance, Column, FieldType, Filters, Formatters, GridOption, GridStateChange, Statistic } from 'angular-slickgrid';
+import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+import { AngularGridInstance, Column, FieldType, Filters, Formatters, GridOption, GridStateChange, OperatorType, Statistic } from 'angular-slickgrid';
+import { CustomInputFilter } from './custom-inputFilter';
 
 function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 const NB_ITEMS = 500;
+const URL_SAMPLE_COLLECTION_DATA = 'assets/data/collection_500_numbers.json';
 
 @Component({
   templateUrl: './grid-clientside.component.html'
@@ -29,6 +31,7 @@ export class GridClientSideComponent implements OnInit {
       </ul>
       <li>On String filters, (*) can be used as startsWith (Hello* => matches "Hello Word") ... endsWith (*Doe => matches: "John Doe")</li>
       <li>Custom Filter are now possible, "Description" column below, is a customized InputFilter with different placeholder. See <a href="https://github.com/ghiscoding/Angular-Slickgrid/wiki/Custom-Filter" target="_blank">Wiki - Custom Filter</a>
+      <li>MultipleSelect & SingeSelect Filters can use a regular "collection" or "collectionAsync" to load it asynchronously</li>
     </ul>
   `;
 
@@ -38,16 +41,9 @@ export class GridClientSideComponent implements OnInit {
   dataset: any[];
   statistics: Statistic;
 
-  constructor(private translate: TranslateService) {
-  }
+  constructor(private http: HttpClient, private translate: TranslateService) {}
 
   ngOnInit(): void {
-    // prepare a multiple-select array to filter with
-    const multiSelectFilterArray = [];
-    for (let i = 0; i < NB_ITEMS; i++) {
-      multiSelectFilterArray.push({ value: i, label: i });
-    }
-
     this.columnDefinitions = [
       { id: 'title', name: 'Title', field: 'title', sortable: true, minWidth: 55,
         type: FieldType.string, filterable: true, filter: { model: Filters.compoundInput }
@@ -62,14 +58,24 @@ export class GridClientSideComponent implements OnInit {
         minWidth: 55,
         filterable: true,
         filter: {
-          collection: multiSelectFilterArray,
+          collectionAsync: this.http.get<{ option: string; value: string; }[]>(URL_SAMPLE_COLLECTION_DATA),
+          collectionFilterBy: {
+            property: 'value',
+            operator: OperatorType.notEqual,
+            value: 365
+          },
           collectionSortBy: {
             property: 'value',
             sortDesc: true,
             fieldType: FieldType.number
           },
+          customStructure: {
+            value: 'value',
+            label: 'label',
+            labelSuffix: 'text',
+            separatorBetweenTextLabels: ' '
+          },
           model: Filters.multipleSelect,
-          searchTerms: [1, 33, 50], // default selection
 
           // we could add certain option(s) to the "multiple-select" plugin
           filterOptions: {
@@ -108,6 +114,7 @@ export class GridClientSideComponent implements OnInit {
         }
       }
     ];
+
     this.gridOptions = {
       autoResize: {
         containerId: 'demo-container',
@@ -133,8 +140,17 @@ export class GridClientSideComponent implements OnInit {
     };
 
     // mock a dataset
-    this.dataset = [];
-    for (let i = 0; i < NB_ITEMS; i++) {
+    this.dataset = this.mockData(NB_ITEMS);
+  }
+
+  angularGridReady(angularGrid: any) {
+    this.angularGrid = angularGrid;
+  }
+
+  mockData(itemCount, startingIndex = 0): any[] {
+    // mock a dataset
+    const tempDataset = [];
+    for (let i = startingIndex; i < (startingIndex + itemCount); i++) {
       const randomDuration = Math.round(Math.random() * 100);
       const randomYear = randomBetween(2000, 2025);
       const randomYearShort = randomBetween(10, 25);
@@ -145,23 +161,21 @@ export class GridClientSideComponent implements OnInit {
       const randomHour = randomBetween(10, 23);
       const randomTime = randomBetween(10, 59);
 
-      this.dataset[i] = {
+      tempDataset.push({
         id: i,
         title: 'Task ' + i,
         description: (i % 5) ? 'desc ' + i : null, // also add some random to test NULL field
         duration: randomDuration,
         percentComplete: randomPercent,
         percentCompleteNumber: randomPercent,
-        start: (i % 3) ? null : new Date(randomYear, randomMonth, randomDay),          // provide a Date format
+        start: (i % 4) ? null : new Date(randomYear, randomMonth, randomDay),          // provide a Date format
         usDateShort: `${randomMonth}/${randomDay}/${randomYearShort}`, // provide a date US Short in the dataset
         utcDate: `${randomYear}-${randomMonthStr}-${randomDay}T${randomHour}:${randomTime}:${randomTime}Z`,
         effortDriven: (i % 3 === 0)
-      };
+      });
     }
-  }
 
-  angularGridReady(angularGrid: any) {
-    this.angularGrid = angularGrid;
+    return tempDataset;
   }
 
   /** Dispatched event of a Grid State Changed event */
