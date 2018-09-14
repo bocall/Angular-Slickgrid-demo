@@ -2,13 +2,13 @@ Arguments:
   C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
 
 PATH: 
-  C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Microsoft MPI\Bin\;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\QT Lite\QTSystem;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\dotnet\;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Subversion\bin;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\amd64\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\1E\NomadBranch\;C:\Program Files\Git\cmd;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\Microsoft VS Code\bin;C:\Users\sesa213338\AppData\Local\Microsoft\WindowsApps;C:\Users\sesa213338\AppData\Local\atom\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\sesa213338\AppData\Local\Microsoft\WindowsApps;C:\Users\sesa213338\AppData\Local\Yarn\bin;C:\Program Files\Microsoft VS Code Insiders\bin;C:\Users\sesa213338\AppData\Roaming\npm;C:\Users\sesa213338\AppData\Local\Box\Box Edit\
+  C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Microsoft MPI\Bin\;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\QT Lite\QTSystem;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\dotnet\;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Subversion\bin;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\amd64\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files\1E\NomadBranch\;C:\Program Files (x86)\Windows Imaging\;C:\Program Files\Microsoft VS Code\bin;C:\Users\sesa213338\AppData\Local\Microsoft\WindowsApps;C:\Users\sesa213338\AppData\Local\atom\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\sesa213338\AppData\Local\Microsoft\WindowsApps;C:\Users\sesa213338\AppData\Local\Yarn\bin;C:\Program Files\Microsoft VS Code Insiders\bin;C:\Users\sesa213338\.dotnet\tools;C:\Users\sesa213338\AppData\Local\Programs\Microsoft VS Code Insiders\bin;C:\Users\sesa213338\AppData\Roaming\npm;C:\Users\sesa213338\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\sesa213338\AppData\Local\Box\Box Edit\
 
 Yarn version: 
   1.5.1
 
 Node version: 
-  8.10.0
+  8.11.3
 
 Platform: 
   win32 x64
@@ -43,7 +43,7 @@ npm manifest:
       "@angular/router": "^5.1.1",
       "@ngx-translate/core": "9.1.1",
       "@ngx-translate/http-loader": "2.0.0",
-      "angular-slickgrid": "1.0.19",
+      "angular-slickgrid": "1.6.5",
       "bootstrap": "^3.3.7",
       "copyfiles": "^1.2.0",
       "core-js": "^2.4.1",
@@ -397,22 +397,23 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   
-  angular-slickgrid@1.0.19:
-    version "1.0.19"
-    resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.0.19.tgz#de143d66a585376f2a777740fc539c8161ff2a74"
+  angular-slickgrid@1.6.3:
+    version "1.6.3"
+    resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.6.3.tgz#278a622368c13d10834b57359e157cc3c3ce23c2"
     dependencies:
       "@ngx-translate/core" "^9.1.1"
       "@ngx-translate/http-loader" "^2.0.0"
       bootstrap "^3.3.7"
       core-js "^2.5.1"
-      flatpickr "^4.0.6"
+      dompurify "^1.0.7"
+      flatpickr "^4.5.1"
       font-awesome "^4.7.0"
       jquery ">=3.2.1"
       jquery-ui-dist "^1.12.1"
-      lodash "^4.17.4"
+      lodash.isequal "^4.5.0"
       moment-mini "^2.19.4"
       rxjs "^5.5.8"
-      slickgrid "2.3.19"
+      slickgrid "~2.3.21"
       text-encoding-utf-8 "^1.0.2"
       tslib "^1.7.1"
       vinyl-paths "^2.1.0"
@@ -1840,6 +1841,10 @@ Lockfile:
     dependencies:
       domelementtype "1"
   
+  dompurify@^1.0.7:
+    version "1.0.7"
+    resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-1.0.7.tgz#33e5c4a5fc84df93b58ca162d1d3f28537aa3ec2"
+  
   domutils@1.1:
     version "1.1.6"
     resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.1.6.tgz#bddc3de099b9a2efacc51c623f28f416ecc57485"
@@ -2353,9 +2358,9 @@ Lockfile:
     dependencies:
       locate-path "^2.0.0"
   
-  flatpickr@^4.0.6:
-    version "4.0.6"
-    resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.0.6.tgz#d898778636984b9b46b590f3b60513fc260db709"
+  flatpickr@^4.5.1:
+    version "4.5.1"
+    resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.5.1.tgz#f65eaf54c07538f87d6f68a67b03cf816d7fb82f"
   
   flatten@^1.0.2:
     version "1.0.2"
@@ -3673,6 +3678,10 @@ Lockfile:
   lodash.clonedeep@^4.3.2, lodash.clonedeep@^4.5.0:
     version "4.5.0"
     resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  
+  lodash.isequal@^4.5.0:
+    version "4.5.0"
+    resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   
   lodash.memoize@^4.1.2:
     version "4.1.2"
@@ -5340,7 +5349,7 @@ Lockfile:
     dependencies:
       aproba "^1.1.1"
   
-  rxjs@^5.5.2, rxjs@^5.5.5:
+  rxjs@^5.5.2:
     version "5.5.5"
     resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.5.tgz#e164f11d38eaf29f56f08c3447f74ff02dd84e97"
     dependencies:
@@ -5575,9 +5584,9 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
   
-  slickgrid@2.3.19:
-    version "2.3.19"
-    resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.19.tgz#904f360907015046c7975e76f8458c7db20fe39c"
+  slickgrid@~2.3.21:
+    version "2.3.21"
+    resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.21.tgz#5e62d92524bc7ae5ea3fb936a2a6121001f592b0"
     dependencies:
       jquery ">=1.8.0"
       jquery-ui ">=1.8.0"
@@ -6799,4 +6808,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.18.tgz#8cecb3977fcd1b3090562ff4570e2847e752b48d"
 
 Trace: 
-  Error: ENOENT: no such file or directory, copyfile 'C:\Users\sesa213338\AppData\Local\Yarn\Cache\v1\npm-@ngx-translate\http-loader-2.0.1-aa67788e64bfa8652691a77b022b3b4031209113\.npmignore' -> 'C:\sourcecode\Angular-Slickgrid-demo\node_modules\angular-slickgrid\node_modules\@ngx-translate\http-loader\.npmignore'
+  Error: https://registry.npmjs.org/angular-slickgrid: tunneling socket could not be established, statusCode=403
+      at ClientRequest.onConnect (C:\Program Files (x86)\Yarn\lib\cli.js:146207:19)
+      at Object.onceWrapper (events.js:319:30)
+      at emitThree (events.js:136:13)
+      at ClientRequest.emit (events.js:217:7)
+      at Socket.socketOnData (_http_client.js:474:11)
+      at emitOne (events.js:116:13)
+      at Socket.emit (events.js:211:7)
+      at addChunk (_stream_readable.js:263:12)
+      at readableAddChunk (_stream_readable.js:250:11)
+      at Socket.Readable.push (_stream_readable.js:208:10)
