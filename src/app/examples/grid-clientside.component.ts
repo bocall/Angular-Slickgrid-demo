@@ -92,11 +92,11 @@ export class GridClientSideComponent implements OnInit {
       { id: 'start', name: 'Start', field: 'start', formatter: Formatters.dateIso, sortable: true, minWidth: 75, exportWithFormatter: true,
         type: FieldType.date, filterable: true, filter: { model: Filters.compoundDate }
       },
-      { id: 'usDateShort', name: 'US Date Short', field: 'usDateShort', sortable: true, minWidth: 70, width: 70,
+      { id: 'usDateShort', name: 'US Date Short', field: 'usDateShort', exportWithFormatter: true, sortable: true, minWidth: 70, width: 70,
         type: FieldType.dateUsShort, filterable: true, filter: { model: Filters.compoundDate }
       },
       { id: 'utcDate', name: 'UTC Date', field: 'utcDate', formatter: Formatters.dateTimeIsoAmPm, sortable: true, minWidth: 115,
-        type: FieldType.dateUtc, outputType: FieldType.dateTimeIsoAmPm, filterable: true, filter: { model: Filters.compoundDate } },
+        type: FieldType.dateUtc, outputType: FieldType.dateTimeIsoAmPm, exportWithFormatter: true, filterable: true, filter: { model: Filters.compoundDate } },
       {
         id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven.isEffort', minWidth: 85, maxWidth: 85,
         type: FieldType.boolean,
