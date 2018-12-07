@@ -1,9 +1,12 @@
 import { AppRoutingRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { GridAddItemComponent } from './examples/grid-additem.component';
 import { GridBasicComponent } from './examples/grid-basic.component';
 import { GridClientSideComponent } from './examples/grid-clientside.component';
 import { GridColspanComponent } from './examples/grid-colspan.component';
+import { GridDraggableGroupingComponent } from './examples/grid-draggrouping.component';
 import { GridEditorComponent } from './examples/grid-editor.component';
 import { GridFormatterComponent } from './examples/grid-formatter.component';
 import { GridGraphqlComponent } from './examples/grid-graphql.component';
@@ -59,9 +62,10 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
     AppComponent,
     GridAddItemComponent,
     GridBasicComponent,
-    GridEditorComponent,
     GridClientSideComponent,
     GridColspanComponent,
+    GridDraggableGroupingComponent,
+    GridEditorComponent,
     GridFormatterComponent,
     GridGraphqlComponent,
     GridGroupingComponent,
@@ -82,6 +86,7 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
   imports: [
     AppRoutingRoutingModule,
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
