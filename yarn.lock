@@ -353,10 +353,10 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular-slickgrid@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.9.0.tgz#4f7ba38d6ab753a56b48180b6775034e4cbd7a3e"
-  integrity sha512-4mHgjx/dSER87Wk1PYK/G7zTHZUwrrKMASASt+DxhoMtsYEIf4mNuFUUJACP3nFs4m1RQDVJwnlTXw6qvvLLSg==
+angular-slickgrid@1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.9.1.tgz#a94dbed872c9d61c6104955e03155a413142c710"
+  integrity sha512-YU6AsusE+pmLeA24TiV9bw8BZLXN2smgrENR+2csblLDG/8KOwCt09Vn9yBpQunvfIrSCY1eOCIm0k9jsXSrDw==
   dependencies:
     "@ngx-translate/core" "^9.1.1"
     "@ngx-translate/http-loader" "^2.0.0"
@@ -370,7 +370,7 @@ angular-slickgrid@1.9.0:
     lodash.isequal "^4.5.0"
     moment-mini "^2.19.4"
     rxjs "^5.5.8"
-    slickgrid "~2.3.21"
+    slickgrid "~2.3.23"
     text-encoding-utf-8 "^1.0.2"
     tslib "^1.7.1"
     vinyl-paths "^2.1.0"
@@ -6364,10 +6364,10 @@ slash@^1.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
   integrity sha1-xB8vbDn8FtHNF61LXYlhFK5HDVU=
 
-slickgrid@~2.3.21:
-  version "2.3.21"
-  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.21.tgz#5e62d92524bc7ae5ea3fb936a2a6121001f592b0"
-  integrity sha512-FgOMujZergBF9KC8H2bwXKh6mawW4mmGKE3556mJaBybvtoVUn2E5llwuc1/KrjDZQELE5/qryXbkIRguXDRPQ==
+slickgrid@~2.3.23:
+  version "2.3.23"
+  resolved "https://registry.yarnpkg.com/slickgrid/-/slickgrid-2.3.23.tgz#b673d5a784da0ecb47ae0f3e501c01a828a4c7b9"
+  integrity sha512-QQ4eC+plbLpT5e7RWXQbMmORXBc08dYCjJp0khDtoOxyAKXLXEivWklUoQsYYZkTydRwOKnHNR6t4I38BsYwqQ==
   dependencies:
     jquery ">=1.8.0"
     jquery-ui ">=1.8.0"

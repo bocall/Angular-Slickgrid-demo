@@ -1,5 +1,13 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { AngularGridInstance, Column, FieldType, Formatters, GridOption, Editors } from 'angular-slickgrid';
+import {
+  AngularGridInstance,
+  Column,
+  Editors,
+  FieldType,
+  Filters,
+  Formatters,
+  GridOption
+} from 'angular-slickgrid';
 
 @Component({
   templateUrl: './grid-rowselection.component.html'
@@ -52,20 +60,66 @@ export class GridRowSelectionComponent implements OnInit {
       { id: 'finish', name: 'Finish', field: 'finish', formatter: Formatters.dateIso, sortable: true, type: FieldType.date, editor: { model: Editors.date }, exportWithFormatter: true },
       { id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven', formatter: Formatters.checkmark, type: FieldType.number, sortable: true }
     ];
+
     this.columnDefinitions2 = [
-      { id: 'title', name: 'Title', field: 'title', sortable: true, type: FieldType.string },
-      { id: 'duration', name: 'Duration (days)', field: 'duration', sortable: true, type: FieldType.number },
-      { id: 'complete', name: '% Complete', field: 'percentComplete', formatter: Formatters.percentCompleteBar, type: FieldType.number, sortable: true },
-      { id: 'start', name: 'Start', field: 'start', formatter: Formatters.dateIso, sortable: true, type: FieldType.dateIso, exportWithFormatter: true  },
-      { id: 'finish', name: 'Finish', field: 'finish', formatter: Formatters.dateIso, sortable: true, type: FieldType.date, exportWithFormatter: true },
-      { id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven', formatter: Formatters.checkmark, type: FieldType.number, sortable: true }
+      {
+        id: 'title', name: 'Title', field: 'title',
+        sortable: true,
+        type: FieldType.string,
+        filterable: true
+      },
+      {
+        id: 'duration', name: 'Duration (days)', field: 'duration',
+        sortable: true,
+        type: FieldType.number,
+        filterable: true
+      },
+      {
+        id: 'complete', name: '% Complete', field: 'percentComplete',
+        formatter: Formatters.percentCompleteBar,
+        type: FieldType.number,
+        filterable: true,
+        sortable: true
+      },
+      {
+        id: 'start', name: 'Start', field: 'start',
+        filterable: true,
+        sortable: true,
+        formatter: Formatters.dateIso,
+        exportWithFormatter: true,
+        type: FieldType.date,
+        filter: { model: Filters.compoundDate },
+      },
+      {
+        id: 'finish', name: 'Finish', field: 'finish',
+        filterable: true,
+        sortable: true,
+        formatter: Formatters.dateIso,
+        exportWithFormatter: true,
+        type: FieldType.date,
+        filter: { model: Filters.compoundDate },
+      },
+      {
+        id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven',
+        formatter: Formatters.checkmark,
+        type: FieldType.boolean,
+        sortable: true,
+        filterable: true,
+        filter: {
+          collection: [{ value: '', label: '' }, { value: true, label: 'true' }, { value: false, label: 'false' }],
+          model: Filters.singleSelect,
+        }
+      }
     ];
+
     this.gridOptions1 = {
       editable: true,
-      autoEdit: true,
+      autoEdit: false,
       enableAutoResize: false,
       enableCellNavigation: true,
+      enableFiltering: false,
       enableCheckboxSelector: true,
+      enableRowSelection: true,
       checkboxSelector: {
         // remove the unnecessary "Select All" checkbox in header when in single selection mode
         hideSelectAllCheckbox: true
@@ -74,11 +128,17 @@ export class GridRowSelectionComponent implements OnInit {
         // True (Single Selection), False (Multiple Selections)
         selectActiveRow: true
       },
-      enableRowSelection: true
     };
+
     this.gridOptions2 = {
       enableAutoResize: false,
       enableCellNavigation: true,
+      enableFiltering: true,
+      checkboxSelector: {
+        // you can toggle these 2 properties to show the "select all" checkbox in different location
+        hideInFilterHeaderRow: false,
+        hideInColumnTitleRow: true
+      },
       rowSelectionOptions: {
         // True (Single Selection), False (Multiple Selections)
         selectActiveRow: false

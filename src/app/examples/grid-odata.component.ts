@@ -59,6 +59,11 @@ export class GridOdataComponent implements OnInit {
         containerId: 'demo-container',
         sidePadding: 15
       },
+      checkboxSelector: {
+        // you can toggle these 2 properties to show the "select all" checkbox in different location
+        hideInFilterHeaderRow: false,
+        hideInColumnTitleRow: true
+      },
       enableCellNavigation: true,
       enableFiltering: true,
       enableCheckboxSelector: true,
