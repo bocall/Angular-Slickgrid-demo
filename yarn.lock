@@ -353,14 +353,14 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular-slickgrid@1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.9.1.tgz#a94dbed872c9d61c6104955e03155a413142c710"
-  integrity sha512-YU6AsusE+pmLeA24TiV9bw8BZLXN2smgrENR+2csblLDG/8KOwCt09Vn9yBpQunvfIrSCY1eOCIm0k9jsXSrDw==
+angular-slickgrid@1.9.3:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.9.3.tgz#23b8dbd5472e850dcd3daab6bffb5d7ca0d96456"
+  integrity sha512-GIpk/juCSQd4zWam4WkLUPm10Wbqk/kmVCWP9m9Bj22LhbP13yhH80KWzuGORwB/5dFuNNSfdlqnNsQha2Y2KQ==
   dependencies:
     "@ngx-translate/core" "^9.1.1"
     "@ngx-translate/http-loader" "^2.0.0"
-    bootstrap "^3.3.7"
+    bootstrap "^3.4.0"
     core-js "^2.5.1"
     dompurify "^1.0.7"
     flatpickr "^4.5.0"
@@ -854,10 +854,10 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
-bootstrap@^3.3.7:
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
-  integrity sha1-WjiTlFSfIzMIdaOxUGVldPip63E=
+bootstrap@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.4.0.tgz#f8d77540dd3062283d2ae7687e21c1e691961640"
+  integrity sha512-F1yTDO9OHKH0xjl03DsOe8Nu1OWBIeAugGMhy3UTIYDdbbIPesQIhCEbj+HEr6wqlwweGAlP8F3OBC6kEuhFuw==
 
 boxen@^1.2.1:
   version "1.2.2"

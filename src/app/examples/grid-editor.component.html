@@ -14,12 +14,16 @@
           </label>
       </span>
       <div class="row col-sm-12">
-          <span>
-              <button class="btn btn-default btn-sm" (click)="undo()">
-                  <i class="fa fa-undo"></i>
-                  Undo last edit(s)
-              </button>
-          </span>
+        <span>
+            <button class="btn btn-default btn-sm" (click)="undo()">
+                <i class="fa fa-undo"></i>
+                Undo last edit(s)
+            </button>
+            <label class="checkbox-inline control-label" for="autoCommitEdit">
+                <input type="checkbox" id="autoCommitEdit" [value]="gridOptions.autoCommitEdit" (click)="changeAutoCommit()">
+                Auto Commit Edit
+              </label>
+        </span>
       </div>
       <div class="row" style="margin-top: 5px">
           <button class="btn btn-default btn-sm" (click)="angularGrid.filterService.clearFilters()">Clear Filters</button>

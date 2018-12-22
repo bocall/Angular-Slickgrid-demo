@@ -455,6 +455,14 @@ export class GridEditorComponent implements OnInit {
     alert(args.validationResults.msg);
   }
 
+  changeAutoCommit() {
+    this.gridOptions.autoCommitEdit = !this.gridOptions.autoCommitEdit;
+    this.gridObj.setOptions({
+      autoCommitEdit: this.gridOptions.autoCommitEdit
+    });
+    return true;
+  }
+
   setAutoEdit(isAutoEdit) {
     this.isAutoEdit = isAutoEdit;
     this.gridObj.setOptions({ autoEdit: isAutoEdit }); // change the grid option dynamically
