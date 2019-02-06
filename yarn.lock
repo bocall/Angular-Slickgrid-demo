@@ -353,10 +353,10 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular-slickgrid@1.9.3:
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.9.3.tgz#23b8dbd5472e850dcd3daab6bffb5d7ca0d96456"
-  integrity sha512-GIpk/juCSQd4zWam4WkLUPm10Wbqk/kmVCWP9m9Bj22LhbP13yhH80KWzuGORwB/5dFuNNSfdlqnNsQha2Y2KQ==
+angular-slickgrid@1.9.5:
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/angular-slickgrid/-/angular-slickgrid-1.9.5.tgz#0d83c6a276b1afab5276ed257ea4348342776fc9"
+  integrity sha512-VIMgwDLsA1yqMArVqTyCVty9qld7zAIACAyTH3FDKKUWesZmriuIFzduqT8WQc8gkq6m0fvTgrreUjxRWPpJoQ==
   dependencies:
     "@ngx-translate/core" "^9.1.1"
     "@ngx-translate/http-loader" "^2.0.0"
