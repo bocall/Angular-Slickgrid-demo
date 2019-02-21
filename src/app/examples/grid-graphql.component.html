@@ -1,4 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div class="container-fluid">
     <h2>{{title}}</h2>
     <div class="subtitle row" [innerHTML]="subTitle"></div>
@@ -19,7 +18,7 @@
             <span style="font-style: italic">{{selectedLanguage + '.json'}}</span>
             <br/>
             <span *ngIf="statistics">
-                <b>Statistics:</b> {{statistics.endTime | date: 'yyyy-MM-dd HH:mm aaaaa\'m\''}} | {{statistics.executionTime}}ms | {{statistics.totalCount}} items
+                <b>Statistics:</b> {{statistics.endTime | date: 'yyyy-MM-dd HH:mm aaaaa\'m\''}} | {{statistics.executionTime}}ms | {{statistics.totalItemCount}} items
             </span>
         </div>
         <div class="col-sm-8">
@@ -37,6 +36,7 @@
         [gridOptions]="gridOptions"
         [dataset]="dataset"
         (onAngularGridCreated)="angularGridReady($event)"
+        (onGridStateChanged)="gridStateChanged($event)"
         (onBeforeGridDestroy)="saveCurrentGridState($event)">
     </angular-slickgrid>
 </div>

@@ -4,12 +4,7 @@
  *
  * @author Saber Chebka, saber.chebka@gmail.com
  */
-import {Inject, Injectable, Optional, PLATFORM_ID} from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {isPlatformBrowser} from '@angular/common';
 
 export class Logger {
     private _clientLogLevel: LoggerLevel = LoggerLevel.INFO;
@@ -70,8 +65,8 @@ export class Logger {
 
       this.http.post(this.options.serverLoggingUrl, {
         level: Levels[level],
-        message: message,
-        additional: additional,
+        message,
+        additional,
         timestamp: this._timestamp()
       }, {headers})
         .subscribe(

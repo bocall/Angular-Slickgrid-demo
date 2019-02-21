@@ -46,7 +46,7 @@ export class GridClientSideComponent implements OnInit {
   ngOnInit(): void {
     this.columnDefinitions = [
       { id: 'title', name: 'Title', field: 'title', sortable: true, minWidth: 55,
-        type: FieldType.string, filterable: true, filter: { model: Filters.compoundInput }
+        type: FieldType.string, filterable: true, filter: { model: Filters.compoundInputText }
       },
       { id: 'description', name: 'Description', field: 'description', filterable: true, sortable: true, minWidth: 80,
         type: FieldType.string,
@@ -59,11 +59,17 @@ export class GridClientSideComponent implements OnInit {
         filterable: true,
         filter: {
           collectionAsync: this.http.get<{ option: string; value: string; }[]>(URL_SAMPLE_COLLECTION_DATA),
-          collectionFilterBy: {
+          // collectionFilterBy & collectionSortBy accept a single or multiple options
+          // we can exclude certains values 365 & 360 from the dropdown filter
+          collectionFilterBy: [{
+            property: 'value',
+            operator: OperatorType.notEqual,
+            value: 360
+          }, {
             property: 'value',
             operator: OperatorType.notEqual,
             value: 365
-          },
+          }],
           collectionSortBy: {
             property: 'value',
             sortDesc: true,
@@ -72,35 +78,42 @@ export class GridClientSideComponent implements OnInit {
           customStructure: {
             value: 'value',
             label: 'label',
+            optionLabel: 'value', // if selected text is too long, we can use option labels instead
             labelSuffix: 'text',
           },
           collectionOptions: {
-            separatorBetweenTextLabels: ' '
+            separatorBetweenTextLabels: ' ',
+            filterResultAfterEachPass: 'chain' // options are "merge" or "chain" (defaults to "chain")
           },
           model: Filters.multipleSelect,
 
           // we could add certain option(s) to the "multiple-select" plugin
           filterOptions: {
             maxHeight: 250,
-            width: 175
+            width: 175,
+
+            // if we want to display shorter text as the selected text (on the select filter itself, parent element)
+            // we can use "useSelectOptionLabel" or "useSelectOptionLabelToHtml" the latter will parse html
+            useSelectOptionLabelToHtml: true
           }
         }
       },
       { id: 'complete', name: '% Complete', field: 'percentComplete', formatter: Formatters.percentCompleteBar, minWidth: 70, type: FieldType.number, sortable: true,
-        filterable: true, filter: { model: Filters.compoundInput }
+        filterable: true, filter: { model: Filters.compoundInputNumber }
       },
       { id: 'start', name: 'Start', field: 'start', formatter: Formatters.dateIso, sortable: true, minWidth: 75, exportWithFormatter: true,
         type: FieldType.date, filterable: true, filter: { model: Filters.compoundDate }
       },
-      { id: 'usDateShort', name: 'US Date Short', field: 'usDateShort', exportWithFormatter: true, sortable: true, minWidth: 70, width: 70,
-        type: FieldType.dateUsShort, filterable: true, filter: { model: Filters.compoundDate }
+      { id: 'usDateShort', name: 'US Date Short', field: 'usDateShort', sortable: true, minWidth: 70, width: 70,
+        type: FieldType.dateUsShort, exportWithFormatter: true, filterable: true, filter: { model: Filters.compoundDate }
       },
       { id: 'utcDate', name: 'UTC Date', field: 'utcDate', formatter: Formatters.dateTimeIsoAmPm, sortable: true, minWidth: 115,
-        type: FieldType.dateUtc, outputType: FieldType.dateTimeIsoAmPm, exportWithFormatter: true, filterable: true, filter: { model: Filters.compoundDate } },
+        type: FieldType.dateUtc, exportWithFormatter: true, outputType: FieldType.dateTimeIsoAmPm, filterable: true, filter: { model: Filters.compoundDate } },
       {
         id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven.isEffort', minWidth: 85, maxWidth: 85,
         type: FieldType.boolean,
         sortable: true,
+        exportCustomFormatter: Formatters.complexObject,
 
         // to pass multiple formatters, use the params property
         // also these formatters are executed in sequence, so if you want the checkmark to work correctly, it has to be the last formatter defined
@@ -141,7 +154,7 @@ export class GridClientSideComponent implements OnInit {
       // use columnDef searchTerms OR use presets as shown below
       presets: {
         filters: [
-          { columnId: 'duration', searchTerms: [2, 22, 44] },
+          { columnId: 'duration', searchTerms: [10, 220] },
           // { columnId: 'complete', searchTerms: ['5'], operator: '>' },
           { columnId: 'usDateShort', operator: '<', searchTerms: ['4/20/25'] },
           // { columnId: 'effort-driven', searchTerms: [true] }
@@ -174,6 +187,7 @@ export class GridClientSideComponent implements OnInit {
       const randomPercent = randomBetween(0, 100);
       const randomHour = randomBetween(10, 23);
       const randomTime = randomBetween(10, 59);
+      const randomMilliseconds = `${randomBetween(1, 9)}${randomBetween(10, 99)}`;
       const randomIsEffort = (i % 3 === 0);
 
       tempDataset.push({
@@ -185,7 +199,7 @@ export class GridClientSideComponent implements OnInit {
         percentCompleteNumber: randomPercent,
         start: (i % 4) ? null : new Date(randomYear, randomMonth, randomDay),          // provide a Date format
         usDateShort: `${randomMonth}/${randomDay}/${randomYearShort}`, // provide a date US Short in the dataset
-        utcDate: `${randomYear}-${randomMonthStr}-${randomDay}T${randomHour}:${randomTime}:${randomTime}Z`,
+        utcDate: `${randomYear}-${randomMonthStr}-${randomDay}T${randomHour}:${randomTime}:${randomTime}.${randomMilliseconds}Z`,
         effortDriven: {
           isEffort: randomIsEffort,
           label: randomIsEffort ? 'Effort' : 'NoEffort',

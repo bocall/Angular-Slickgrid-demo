@@ -1,14 +1,25 @@
 import { AppRoutingRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Injector, APP_INITIALIZER, NgModule } from '@angular/core';
+import { LOCATION_INITIALIZED } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { CustomTitleFormatterComponent } from './examples/custom-titleFormatter.component';
+import { EditorNgSelectComponent } from './examples/editor-ng-select.component';
+import { FilterNgSelectComponent } from './examples/filter-ng-select.component';
 import { GridAddItemComponent } from './examples/grid-additem.component';
+import { GridAngularComponent } from './examples/grid-angular.component';
 import { GridBasicComponent } from './examples/grid-basic.component';
 import { GridClientSideComponent } from './examples/grid-clientside.component';
 import { GridColspanComponent } from './examples/grid-colspan.component';
 import { GridDraggableGroupingComponent } from './examples/grid-draggrouping.component';
 import { GridEditorComponent } from './examples/grid-editor.component';
 import { GridFormatterComponent } from './examples/grid-formatter.component';
+import { GridFrozenComponent } from './examples/grid-frozen.component';
 import { GridGraphqlComponent } from './examples/grid-graphql.component';
 import { GridGroupingComponent } from './examples/grid-grouping.component';
 import { GridHeaderMenuComponent } from './examples/grid-headermenu.component';
@@ -17,15 +28,13 @@ import { GridLocalizationComponent } from './examples/grid-localization.componen
 import { GridMenuComponent } from './examples/grid-menu.component';
 import { GridOdataComponent } from './examples/grid-odata.component';
 import { GridRemoteComponent } from './examples/grid-remote.component';
+import { GridRowDetailComponent } from './examples/grid-rowdetail.component';
 import { GridRowMoveComponent } from './examples/grid-rowmove.component';
 import { GridRowSelectionComponent } from './examples/grid-rowselection.component';
 import { GridStateComponent } from './examples/grid-state.component';
 import { HomeComponent } from './examples/home.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Injector, APP_INITIALIZER, NgModule } from '@angular/core';
-import { LOCATION_INITIALIZED } from '@angular/common';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { RowDetailPreloadComponent } from './examples/rowdetail-preload.component';
+import { RowDetailViewComponent } from './examples/rowdetail-view.component';
 
 import { SwtCommonGridTestComponent } from './examples/swt-common-grid-test.component';
 import { SwtCommonGridPaginationComponent } from './examples/swt-common-grid-pagination.component';
@@ -57,16 +66,22 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
   });
 }
 
+// @dynamic
 @NgModule({
   declarations: [
     AppComponent,
+    CustomTitleFormatterComponent,
+    EditorNgSelectComponent,
+    FilterNgSelectComponent,
     GridAddItemComponent,
+    GridAngularComponent,
     GridBasicComponent,
     GridClientSideComponent,
     GridColspanComponent,
-    GridDraggableGroupingComponent,
     GridEditorComponent,
+    GridDraggableGroupingComponent,
     GridFormatterComponent,
+    GridFrozenComponent,
     GridGraphqlComponent,
     GridGroupingComponent,
     GridHeaderButtonComponent,
@@ -75,9 +90,12 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
     GridMenuComponent,
     GridOdataComponent,
     GridRemoteComponent,
+    GridRowDetailComponent,
     GridRowMoveComponent,
     GridRowSelectionComponent,
     GridStateComponent,
+    RowDetailPreloadComponent,
+    RowDetailViewComponent,
     SwtCommonGridTestComponent,
     SwtCommonGridPaginationComponent,
     SwtCommonGridComponent,
@@ -88,6 +106,7 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    NgSelectModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -104,6 +123,14 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
         sidePadding: 15
       }
     })
+  ],
+  entryComponents: [
+    // dynamically created components
+    CustomTitleFormatterComponent,
+    EditorNgSelectComponent,
+    FilterNgSelectComponent,
+    RowDetailPreloadComponent,
+    RowDetailViewComponent,
   ],
   providers: [
     {

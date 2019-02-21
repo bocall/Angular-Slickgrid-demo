@@ -56,6 +56,21 @@ export class GridAddItemComponent implements OnInit {
   ngOnInit(): void {
     this.columnDefinitions = [
       {
+        id: 'delete',
+        field: 'id',
+        excludeFromHeaderMenu: true,
+        formatter: Formatters.deleteIcon,
+        minWidth: 30,
+        maxWidth: 30,
+        // use onCellClick OR grid.onClick.subscribe which you can see down below
+        onCellClick: (e: Event, args: OnEventArgs) => {
+          console.log(args);
+          if (confirm('Are you sure?')) {
+            this.angularGrid.gridService.deleteDataGridItemById(args.dataContext.id);
+          }
+        }
+      },
+      {
         id: 'title', name: 'Title', field: 'title',
         sortable: true,
         type: FieldType.string,
@@ -213,5 +228,14 @@ export class GridAddItemComponent implements OnInit {
 
     // OR by id
     // this.angularGrid.gridService.updateDataGridItemById(updatedItem.id, updatedItem);
+
+    // OR multiple changes
+    /*
+    const updatedItem1 = this.angularGrid.gridService.getDataItemByRowNumber(1);
+    const updatedItem2 = this.angularGrid.gridService.getDataItemByRowNumber(2);
+    updatedItem1.duration = Math.round(Math.random() * 100);
+    updatedItem2.duration = Math.round(Math.random() * 100);
+    this.angularGrid.gridService.updateDataGridItems([updatedItem1, updatedItem2], true);
+    */
   }
 }

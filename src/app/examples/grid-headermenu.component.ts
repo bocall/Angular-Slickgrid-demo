@@ -1,5 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { AngularGridInstance, Column, ColumnSort, GridOption } from 'angular-slickgrid';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: './grid-headermenu.component.html'
@@ -15,6 +16,7 @@ export class GridHeaderMenuComponent implements OnInit {
       <li>Hover over any column header to see an arrow showing up on the right</li>
       <li>Try Sorting (multi-sort) the 2 columns "Duration" and "% Complete" (the other ones are disabled)</li>
       <li>Try hiding any columns (you use the "Column Picker" plugin by doing a right+click on the header to show the column back)</li>
+      <li>Note: The "Header Button" & "Header Menu" Plugins cannot be used at the same time</li>
     </ul>
   `;
 
@@ -22,45 +24,43 @@ export class GridHeaderMenuComponent implements OnInit {
   columnDefinitions: Column[];
   gridOptions: GridOption;
   dataset: any[];
-  gridObj: any;
-  dataviewObj: any;
+  selectedLanguage: string;
+
+  constructor(private translate: TranslateService) {
+    this.selectedLanguage = this.translate.getDefaultLang();
+  }
 
   ngOnInit(): void {
     this.columnDefinitions = [
-      { id: 'title', name: 'Title', field: 'title' },
-      { id: 'duration', name: 'Duration', field: 'duration', sortable: true },
+      { id: 'title', name: 'Title', field: 'title', headerKey: 'TITLE' },
+      { id: 'duration', name: 'Duration', field: 'duration', headerKey: 'DURATION', sortable: true },
       { id: '%', name: '% Complete', field: 'percentComplete', sortable: true },
-      { id: 'start', name: 'Start', field: 'start' },
-      { id: 'finish', name: 'Finish', field: 'finish' },
-      { id: 'effort-driven', name: 'Effort Driven', field: 'effortDriven' }
+      { id: 'start', name: 'Start', field: 'start', headerKey: 'START' },
+      { id: 'finish', name: 'Finish', field: 'finish', headerKey: 'FINISH' },
+      { id: 'effort-driven', name: 'Completed', field: 'effortDriven', headerKey: 'COMPLETED' }
     ];
 
     this.columnDefinitions.forEach((columnDef) => {
       columnDef.header = {
         menu: {
           items: [
-            {
-              iconCssClass: 'fa fa-sort-asc',
-              title: 'Sort Ascending',
-              disabled: !columnDef.sortable,
-              command: 'sort-asc'
-            },
-            {
-              iconCssClass: 'fa fa-sort-desc',
-              title: 'Sort Descending',
-              disabled: !columnDef.sortable,
-              command: 'sort-desc'
-            },
-            {
-              iconCssClass: 'fa fa-times',
-              title: 'Hide Column',
-              command: 'hide'
-            },
+            // add Custom Header Menu Item Commands at the bottom of the already existing internal custom items
+            // you cannot override an internal command but you can hide them and create your own
+            // also note that the internal custom commands are in the positionOrder range of 50-60,
+            // if you want yours at the bottom then start with 61, below 50 will make your command(s) on top
             {
               iconCssClass: 'fa fa-question-circle',
-              title: 'Help',
-              command: 'help'
-            }
+              disabled: (columnDef.id === 'effort-driven'), // you can disable a command with certain logic
+              titleKey: 'HELP', // use "title" as plain string OR "titleKey" when using a translation key
+              command: 'help',
+              positionOrder: 99
+            },
+            // you can also add divider between commands (command is a required property but you can set it to empty string)
+            {
+              divider: true,
+              command: '',
+              positionOrder: 98
+            },
           ]
         }
       };
@@ -76,28 +76,16 @@ export class GridHeaderMenuComponent implements OnInit {
       enableFiltering: false,
       enableCellNavigation: true,
       headerMenu: {
+        hideSortCommands: false,
+        hideColumnHideCommand: false,
         onCommand: (e, args) => {
-          if (args.command === 'hide') {
-            this.angularGrid.pluginService.hideColumn(args.column);
-            this.angularGrid.pluginService.autoResizeColumns();
-          } else if (args.command === 'sort-asc' || args.command === 'sort-desc') {
-            // get previously sorted columns
-            const cols: ColumnSort[] = this.angularGrid.sortService.getPreviousColumnSorts(args.column.id + '');
-
-            // add to the column array, the column sorted by the header menu
-            cols.push({ sortCol: args.column, sortAsc: (args.command === 'sort-asc') });
-            this.angularGrid.sortService.onLocalSortChanged(this.gridObj, this.dataviewObj, cols);
-
-            // update the this.gridObj sortColumns array which will at the same add the visual sort icon(s) on the UI
-            const newSortColumns: ColumnSort[] = cols.map((col) => {
-              return { columnId: col.sortCol.id, sortAsc: col.sortAsc };
-            });
-            this.gridObj.setSortColumns(newSortColumns); // add sort icon in UI
-          } else {
-            alert('Command: ' + args.command);
+          if (args.command === 'help') {
+            alert('Please help!!!');
           }
         }
-      }
+      },
+      enableTranslate: true,
+      i18n: this.translate
     };
 
     this.getData();
@@ -124,10 +112,8 @@ export class GridHeaderMenuComponent implements OnInit {
     this.angularGrid = angularGrid;
   }
 
-  gridReady(grid) {
-    this.gridObj = grid;
-  }
-  dataviewReady(dataview) {
-    this.dataviewObj = dataview;
+  switchLanguage() {
+    this.selectedLanguage = (this.selectedLanguage === 'en') ? 'fr' : 'en';
+    this.translate.use(this.selectedLanguage);
   }
 }

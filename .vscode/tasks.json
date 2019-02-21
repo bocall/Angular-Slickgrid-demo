@@ -12,6 +12,12 @@
             "type": "shell",
             "command": "npm run build-demo",
             "problemMatcher": []
-        }
+        },
+        {
+            "label": "Run Demo Sample",
+            "type": "shell",
+            "command": "npm start",
+            "problemMatcher": []
+        },
     ]
 }

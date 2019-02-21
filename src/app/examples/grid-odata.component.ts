@@ -1,6 +1,13 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Column, FieldType, Filters, GridOdataService, GridOption, Statistic } from 'angular-slickgrid';
+import {
+  Column,
+  FieldType,
+  Filters,
+  GridOdataService,
+  GridOption,
+  Statistic
+} from 'angular-slickgrid';
 
 const defaultPageSize = 20;
 const sampleDataRoot = 'assets/data';

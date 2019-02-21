@@ -1,4 +1,4 @@
-import { Editor, KeyCode } from 'angular-slickgrid';
+import { Column, Editor, EditorValidator, EditorValidatorOutput, KeyCode } from 'angular-slickgrid';
 
 // using external non-typed js libraries
 declare var $: any;
@@ -15,8 +15,29 @@ export class CustomInputEditor implements Editor {
     this.init();
   }
 
+  /** Get Column Definition object */
+  get columnDef(): Column {
+    return this.args && this.args.column || {};
+  }
+
+  /** Get Column Editor object */
+  get columnEditor(): any {
+    return this.columnDef && this.columnDef.internalColumnEditor || {};
+  }
+
+  get hasAutoCommitEdit() {
+    return this.args.grid.getOptions().autoCommitEdit;
+  }
+
+  /** Get the Validator function, can be passed in Editor property or Column Definition */
+  get validator(): EditorValidator {
+    return this.columnEditor.validator || this.columnDef.validator;
+  }
+
   init(): void {
-    this.$input = $(`<input type="text" class="editor-text" placeholder="custom" />`)
+    const placeholder = this.columnEditor && this.columnEditor.placeholder || '';
+
+    this.$input = $(`<input type="text" class="editor-text" placeholder="${placeholder}" />`)
       .appendTo(this.args.container)
       .on('keydown.nav', (e) => {
         if (e.keyCode === KeyCode.LEFT || e.keyCode === KeyCode.RIGHT) {
@@ -24,13 +45,19 @@ export class CustomInputEditor implements Editor {
         }
       });
 
+    // the lib does not get the focus out event for some reason
+    // so register it here
+    if (this.hasAutoCommitEdit) {
+      this.$input.on('focusout', () => this.save());
+    }
+
     setTimeout(() => {
       this.$input.focus().select();
     }, 50);
   }
 
   destroy() {
-    this.$input.remove();
+    this.$input.off('keydown.nav').remove();
   }
 
   focus() {
@@ -64,9 +91,19 @@ export class CustomInputEditor implements Editor {
     return (!(this.$input.val() === '' && this.defaultValue === null)) && (this.$input.val() !== this.defaultValue);
   }
 
-  validate() {
-    if (this.args.column.validator) {
-      const validationResults = this.args.column.validator(this.$input.val());
+  save() {
+    if (this.hasAutoCommitEdit) {
+      this.args.grid.getEditorLock().commitCurrentEdit();
+    } else {
+      this.args.commitChanges();
+    }
+  }
+
+  validate(): EditorValidatorOutput {
+    if (this.validator) {
+      const value = this.$input && this.$input.val && this.$input.val();
+      const validationResults = this.validator(value, this.args);
+
       if (!validationResults.valid) {
         return validationResults;
       }

@@ -10,14 +10,16 @@ import {
   GraphqlService,
   GraphqlServiceOption,
   GridOption,
+  GridStateChange,
   OperatorType,
   SortDirection,
   Statistic
 } from 'angular-slickgrid';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 const defaultPageSize = 20;
 const GRAPHQL_QUERY_DATASET_NAME = 'users';
+const LOCAL_STORAGE_KEY = 'gridStateGraphql';
 
 @Component({
   templateUrl: './grid-graphql.component.html'
@@ -43,13 +45,13 @@ export class GridGraphqlComponent implements OnInit, OnDestroy {
   columnDefinitions: Column[];
   gridOptions: GridOption;
   dataset = [];
+  statistics: Statistic;
 
   graphqlQuery = '';
   processing = true;
   status = { text: 'processing...', class: 'alert alert-danger' };
   isWithCursor = false;
   selectedLanguage: string;
-  statistics: Statistic;
   gridStateSub: Subscription;
 
   constructor(private translate: TranslateService) {
@@ -76,7 +78,10 @@ export class GridGraphqlComponent implements OnInit, OnDestroy {
         filterable: true,
         filter: {
           model: Filters.multipleSelect,
-          collection: [{ value: 'acme', label: 'Acme'}, { value: 'abc', label: 'Company ABC'}, { value: 'xyz', label: 'Company XYZ'}]
+          collection: [{ value: 'acme', label: 'Acme'}, { value: 'abc', label: 'Company ABC'}, { value: 'xyz', label: 'Company XYZ'}],
+          filterOptions: {
+            filter: true // adds a filter on top of the multi-select dropdown
+          }
         }
       },
       { id: 'billing.address.street', field: 'billing.address.street', headerKey: 'BILLING.ADDRESS.STREET', width: 60, filterable: true, sortable: true },
@@ -100,6 +105,21 @@ export class GridGraphqlComponent implements OnInit, OnDestroy {
       i18n: this.translate,
       gridMenu: {
         resizeOnShowHeaderRow: true,
+        customItems: [
+          {
+            iconCssClass: 'fa fa-times text-danger',
+            title: 'Reset Grid',
+            disabled: false,
+            command: 'reset-grid',
+            positionOrder: 60
+          }
+        ],
+        onCommand: (e, args) => {
+          if (args.command === 'reset-grid') {
+            this.angularGrid.gridService.resetGrid(this.columnDefinitions);
+            localStorage[LOCAL_STORAGE_KEY] = null;
+          }
+        }
       },
       pagination: {
         pageSizes: [10, 15, 20, 25, 30, 40, 50, 75, 100],
@@ -186,11 +206,6 @@ export class GridGraphqlComponent implements OnInit, OnDestroy {
           },
           totalCount: 100
         }
-      },
-      timestamps: {
-        startTime: new Date(),
-        endTime: new Date(),
-        executionTime: 150
       }
     };
 
@@ -200,6 +215,12 @@ export class GridGraphqlComponent implements OnInit, OnDestroy {
         resolve(mockedResult);
       }, 500);
     });
+  }
+
+  /** Dispatched event of a Grid State Changed event */
+  gridStateChanged(gridStateChanges: GridStateChange) {
+    console.log('Client sample, Grid State changed:: ', gridStateChanges);
+    localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(gridStateChanges.gridState);
   }
 
   /** Save current Filters, Sorters in LocaleStorage or DB */

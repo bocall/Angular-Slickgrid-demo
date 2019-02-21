@@ -13,15 +13,20 @@ import {
   GridOption,
   OnEventArgs,
   OperatorType,
+  Sorters,
 } from 'angular-slickgrid';
 import { CustomInputEditor } from './custom-inputEditor';
-import { Subject } from 'rxjs/Subject';
+import { CustomInputFilter } from './custom-inputFilter';
+import { Subject } from 'rxjs';
 
 // using external non-typed js libraries
 declare var Slick: any;
+declare var $: any;
 
 const NB_ITEMS = 100;
 const URL_SAMPLE_COLLECTION_DATA = 'assets/data/collection_100_numbers.json';
+const URL_COUNTRIES_COLLECTION = 'assets/data/countries.json';
+const URL_COUNTRY_NAMES = 'assets/data/country_names.json';
 
 // you can create custom validator to pass to an inline editor
 const myCustomTitleValidator: EditorValidator = (value: any, args: EditorArgs) => {
@@ -134,6 +139,7 @@ export class GridEditorComponent implements OnInit {
         id: 'title',
         name: 'Title',
         field: 'title',
+        minWidth: 100,
         filterable: true,
         sortable: true,
         type: FieldType.string,
@@ -141,7 +147,6 @@ export class GridEditorComponent implements OnInit {
           model: Editors.longText,
           validator: myCustomTitleValidator, // use a custom validator
         },
-        minWidth: 100,
         onCellChange: (e: Event, args: OnEventArgs) => {
           console.log(args);
           this.alertWarning = `Updated Title: ${args.dataContext.title}`;
@@ -150,18 +155,24 @@ export class GridEditorComponent implements OnInit {
         id: 'title2',
         name: 'Title, Custom Editor',
         field: 'title',
+        minWidth: 70,
         filterable: true,
         sortable: true,
         type: FieldType.string,
         editor: {
           model: CustomInputEditor,
+          placeholder: 'custom',
           validator: myCustomTitleValidator, // use a custom validator
         },
-        minWidth: 70
+        filter: {
+          model: CustomInputFilter,
+          placeholder: '&#128269; custom',
+        },
       }, {
         id: 'duration',
         name: 'Duration (days)',
         field: 'duration',
+        minWidth: 100,
         filterable: true,
         sortable: true,
         type: FieldType.number,
@@ -184,11 +195,11 @@ export class GridEditorComponent implements OnInit {
           params: { decimalPlaces: 2 },
         },
         */
-        minWidth: 100
       }, {
         id: 'complete',
         name: '% Complete',
         field: 'percentComplete',
+        minWidth: 100,
         filterable: true,
         formatter: Formatters.multiple,
         type: FieldType.number,
@@ -218,7 +229,6 @@ export class GridEditorComponent implements OnInit {
             maxHeight: 400
           }
         },
-        minWidth: 100,
         params: {
           formatters: [Formatters.collectionEditor, Formatters.percentCompleteBar],
         }
@@ -226,11 +236,12 @@ export class GridEditorComponent implements OnInit {
         id: 'start',
         name: 'Start',
         field: 'start',
+        minWidth: 100,
         filterable: true,
         filter: { model: Filters.compoundDate },
         formatter: Formatters.dateIso,
+        exportWithFormatter: true,
         sortable: true,
-        minWidth: 100,
         type: FieldType.date,
         editor: {
           model: Editors.date
@@ -239,19 +250,103 @@ export class GridEditorComponent implements OnInit {
         id: 'finish',
         name: 'Finish',
         field: 'finish',
+        minWidth: 100,
         filterable: true,
+        sortable: true,
         filter: { model: Filters.compoundDate },
         formatter: Formatters.dateIso,
-        sortable: true,
-        minWidth: 100,
+        exportWithFormatter: true,
         type: FieldType.date,
         editor: {
           model: Editors.date
         },
       }, {
+        id: 'cityOfOrigin', name: 'City of Origin', field: 'cityOfOrigin',
+        filterable: true,
+        minWidth: 100,
+        editor: {
+          model: Editors.autoComplete,
+          placeholder: '&#128269; search city',
+
+          // We can use the autocomplete through 3 ways "collection", "collectionAsync" or with your own autocomplete options
+          // use your own autocomplete options, instead of $.ajax, use http
+          // here we use $.ajax just because I'm not sure how to configure http with JSONP and CORS
+          editorOptions: {
+            minLength: 3,
+            source: (request, response) => {
+              $.ajax({
+                url: 'http://gd.geobytes.com/AutoCompleteCity',
+                dataType: 'jsonp',
+                data: {
+                  q: request.term
+                },
+                success: (data) => response(data)
+              });
+            }
+          },
+        },
+        filter: {
+          model: Filters.autoComplete,
+          // placeholder: '&#128269; search city',
+
+          // We can use the autocomplete through 3 ways "collection", "collectionAsync" or with your own autocomplete options
+          // collectionAsync: this.http.get(URL_COUNTRIES_COLLECTION),
+
+          // OR use your own autocomplete options, instead of $.ajax, use http
+          // here we use $.ajax just because I'm not sure how to configure http with JSONP and CORS
+          filterOptions: {
+            minLength: 3,
+            source: (request, response) => {
+              $.ajax({
+                url: 'http://gd.geobytes.com/AutoCompleteCity',
+                dataType: 'jsonp',
+                data: {
+                  q: request.term
+                },
+                success: (data) => response(data)
+              });
+            }
+          },
+        }
+      }, {
+        id: 'countryOfOrigin', name: 'Country of Origin', field: 'countryOfOrigin',
+        formatter: Formatters.complexObject,
+        exportWithFormatter: true,
+        dataKey: 'code',
+        labelKey: 'name',
+        type: FieldType.object,
+        sorter: Sorters.objectString, // this sorter requires the dataKey and assume that obj1[dataKey] will be a string so it can sort it that way
+        filterable: true,
+        sortable: true,
+        minWidth: 100,
+        editor: {
+          model: Editors.autoComplete,
+          customStructure: { label: 'name', value: 'code' },
+          collectionAsync: this.http.get(URL_COUNTRIES_COLLECTION),
+        },
+        filter: {
+          model: Filters.autoComplete,
+          customStructure: { label: 'name', value: 'code' },
+          collectionAsync: this.http.get(URL_COUNTRIES_COLLECTION),
+        }
+      }, {
+        id: 'countryOfOriginName', name: 'Country of Origin Name', field: 'countryOfOriginName',
+        filterable: true,
+        sortable: true,
+        minWidth: 100,
+        editor: {
+          model: Editors.autoComplete,
+          collectionAsync: this.http.get(URL_COUNTRY_NAMES),
+        },
+        filter: {
+          model: Filters.autoComplete,
+          collectionAsync: this.http.get(URL_COUNTRY_NAMES),
+        }
+      }, {
         id: 'effort-driven',
         name: 'Effort Driven',
         field: 'effortDriven',
+        minWidth: 70,
         filterable: true,
         type: FieldType.boolean,
         filter: {
@@ -262,14 +357,13 @@ export class GridEditorComponent implements OnInit {
         editor: {
           model: Editors.checkbox,
         },
-        minWidth: 70
       }, {
         id: 'prerequisites',
         name: 'Prerequisites',
         field: 'prerequisites',
+        minWidth: 100,
         filterable: true,
         formatter: taskFormatter,
-        minWidth: 100,
         sortable: true,
         type: FieldType.string,
         editor: {
@@ -315,6 +409,7 @@ export class GridEditorComponent implements OnInit {
     this.gridOptions = {
       asyncEditorLoading: false,
       autoEdit: this.isAutoEdit,
+      autoCommitEdit: false,
       autoResize: {
         containerId: 'demo-container',
         sidePadding: 15
@@ -422,7 +517,10 @@ export class GridEditorComponent implements OnInit {
         start: new Date(randomYear, randomMonth, randomDay),
         finish: new Date(randomYear, (randomMonth + 1), randomDay),
         effortDriven: (i % 5 === 0),
-        prerequisites: (i % 2 === 0) && i !== 0 && i < 12 ? [i, i - 1] : []
+        prerequisites: (i % 2 === 0) && i !== 0 && i < 12 ? [i, i - 1] : [],
+        countryOfOrigin: (i % 2) ? { code: 'CA', name: 'Canada' } : { code: 'US', name: 'United States' },
+        countryOfOriginName: (i % 2) ? 'Canada' : 'United States',
+        cityOfOrigin: (i % 2) ? 'Vancouver, BC, Canada' : 'Boston, MA, United States',
       });
     }
     return tempDataset;
