@@ -28,7 +28,7 @@ export class CustomAngularComponentFilter implements Filter {
   callback: FilterCallback;
   operator: OperatorType | OperatorString = OperatorType.equal;
 
-  constructor() {}
+  constructor() { }
 
   /** Angular Util Service (could be inside the Grid Options Params or the Filter Params ) */
   get angularUtilService(): AngularUtilService {
