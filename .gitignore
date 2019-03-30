@@ -43,5 +43,5 @@ testem.log
 Thumbs.db
 
 # lock files
-yarn.locl
+yarn.lock
 yarn-error.log
