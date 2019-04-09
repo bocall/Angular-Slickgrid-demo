@@ -22,7 +22,7 @@ export class CustomInputFilter implements Filter {
   callback: FilterCallback;
   operator: OperatorType | OperatorString = OperatorType.equal;
 
-  constructor() {}
+  constructor() { }
 
   /** Getter for the Column Filter */
   get columnFilter(): ColumnFilter {
@@ -54,7 +54,11 @@ export class CustomInputFilter implements Filter {
 
     // step 3, subscribe to the keyup event and run the callback when that happens
     this.$filterElm.keyup((e: any) => {
-      const value = e && e.target && e.target.value || '';
+      let value = e && e.target && e.target.value || '';
+      if (typeof value === 'string' && this.columnFilter.enableTrimWhiteSpace) {
+        value = value.trim();
+      }
+
       if (this._clearFilterTriggered) {
         this.callback(e, { columnDef: this.columnDef, clearFilterTriggered: this._clearFilterTriggered });
         this._clearFilterTriggered = false; // reset flag for next use
