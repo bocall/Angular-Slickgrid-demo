@@ -97,7 +97,7 @@ export class GridEditorComponent implements OnInit {
 
   constructor(private http: HttpClient, private translate: TranslateService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.prepareGrid();
   }
 
@@ -146,6 +146,7 @@ export class GridEditorComponent implements OnInit {
         type: FieldType.string,
         editor: {
           model: Editors.longText,
+          required: true,
           validator: myCustomTitleValidator, // use a custom validator
         },
         onCellChange: (e: Event, args: OnEventArgs) => {
@@ -188,8 +189,11 @@ export class GridEditorComponent implements OnInit {
         editor: {
           // default is 0 decimals, if no decimals is passed it will accept 0 or more decimals
           // however if you pass the "decimalPlaces", it will validate with that maximum
+          alwaysSaveOnEnterKey: true, // defaults to False, when set to true and user presses ENTER it will always call a Save even if value is empty
           model: Editors.float,
-          minValue: 0,
+          placeholder: 'enter number',
+          title: 'Your number must be bigger than 5', title: 'show a custom title', // add a custom title, to see it as a real tooltip you'll need to implement something like tipsy jquery lib
+          minValue: 5,
           maxValue: 365,
           // the default validation error message is in English but you can override it by using "errorMessage"
           // errorMessage: this.i18n.tr('INVALID_FLOAT', { maxDecimal: 2 }),
@@ -389,6 +393,7 @@ export class GridEditorComponent implements OnInit {
             separatorBetweenTextLabels: ' '
           },
           model: Editors.multipleSelect,
+          required: true
         },
         filter: {
           collectionAsync: this.http.get<{ value: string; label: string; }[]>(URL_SAMPLE_COLLECTION_DATA),
@@ -510,18 +515,20 @@ export class GridEditorComponent implements OnInit {
     const tempDataset = [];
     for (let i = startingIndex; i < (startingIndex + itemCount); i++) {
       const randomYear = 2000 + Math.floor(Math.random() * 10);
+      const randomFinishYear = (new Date().getFullYear() - 3) + Math.floor(Math.random() * 10); // use only years not lower than 3 years ago
       const randomMonth = Math.floor(Math.random() * 11);
       const randomDay = Math.floor((Math.random() * 29));
       const randomPercent = Math.round(Math.random() * 100);
+      const randomFinish = new Date(randomFinishYear, (randomMonth + 1), randomDay);
 
       tempDataset.push({
         id: i,
         title: 'Task ' + i,
-        duration: Math.round(Math.random() * 100) + '',
+        duration: (i % 33 === 0) ? null : Math.round(Math.random() * 100) + '',
         percentComplete: randomPercent,
         percentCompleteNumber: randomPercent,
         start: new Date(randomYear, randomMonth, randomDay),
-        finish: new Date(randomYear, (randomMonth + 1), randomDay),
+        finish: randomFinish < new Date() ? '' : randomFinish, // make sure the random date is earlier than today
         effortDriven: (i % 5 === 0),
         prerequisites: (i % 2 === 0) && i !== 0 && i < 12 ? [i, i - 1] : [],
         countryOfOrigin: (i % 2) ? { code: 'CA', name: 'Canada' } : { code: 'US', name: 'United States' },
