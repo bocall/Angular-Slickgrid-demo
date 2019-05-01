@@ -1,4 +1,4 @@
-import { Column, Editor, EditorValidator, EditorValidatorOutput, KeyCode } from 'angular-slickgrid';
+import { Column, ColumnEditor, Editor, EditorValidator, EditorValidatorOutput, KeyCode } from 'angular-slickgrid';
 
 // using external non-typed js libraries
 declare var $: any;
@@ -8,6 +8,7 @@ declare var $: any;
  * KeyDown events are also handled to provide handling for Tab, Shift-Tab, Esc and Ctrl-Enter.
  */
 export class CustomInputEditor implements Editor {
+  private _lastInputEvent: KeyboardEvent;
   $input: any;
   defaultValue: any;
 
@@ -21,7 +22,7 @@ export class CustomInputEditor implements Editor {
   }
 
   /** Get Column Editor object */
-  get columnEditor(): any {
+  get columnEditor(): ColumnEditor {
     return this.columnDef && this.columnDef.internalColumnEditor || {};
   }
 
@@ -36,12 +37,14 @@ export class CustomInputEditor implements Editor {
 
   init(): void {
     const placeholder = this.columnEditor && this.columnEditor.placeholder || '';
+    const title = this.columnEditor && this.columnEditor.title || '';
 
-    this.$input = $(`<input type="text" class="editor-text" placeholder="${placeholder}" />`)
+    this.$input = $(`<input type="text" class="editor-text" placeholder="${placeholder}" title="${title}" />`)
       .appendTo(this.args.container)
-      .on('keydown.nav', (e) => {
-        if (e.keyCode === KeyCode.LEFT || e.keyCode === KeyCode.RIGHT) {
-          e.stopImmediatePropagation();
+      .on('keydown.nav', (event: KeyboardEvent) => {
+        this._lastInputEvent = event;
+        if (event.keyCode === KeyCode.LEFT || event.keyCode === KeyCode.RIGHT) {
+          event.stopImmediatePropagation();
         }
       });
 
@@ -84,29 +87,33 @@ export class CustomInputEditor implements Editor {
   }
 
   applyValue(item: any, state: any) {
-    item[this.args.column.field] = state;
+    const validation = this.validate(state);
+    item[this.args.column.field] = (validation && validation.valid) ? state : '';
   }
 
   isValueChanged() {
+    const lastEvent = this._lastInputEvent && this._lastInputEvent.keyCode;
+    if (this.columnEditor && this.columnEditor.alwaysSaveOnEnterKey && lastEvent === KeyCode.ENTER) {
+      return true;
+    }
     return (!(this.$input.val() === '' && this.defaultValue === null)) && (this.$input.val() !== this.defaultValue);
   }
 
   save() {
-    if (this.hasAutoCommitEdit) {
-      this.args.grid.getEditorLock().commitCurrentEdit();
-    } else {
-      this.args.commitChanges();
+    const validation = this.validate();
+    if (validation && validation.valid) {
+      if (this.hasAutoCommitEdit) {
+        this.args.grid.getEditorLock().commitCurrentEdit();
+      } else {
+        this.args.commitChanges();
+      }
     }
   }
 
-  validate(): EditorValidatorOutput {
+  validate(inputValue?: any): EditorValidatorOutput {
     if (this.validator) {
-      const value = this.$input && this.$input.val && this.$input.val();
-      const validationResults = this.validator(value, this.args);
-
-      if (!validationResults.valid) {
-        return validationResults;
-      }
+      const value = (inputValue !== undefined) ? inputValue : this.$input && this.$input.val && this.$input.val();
+      return this.validator(value, this.args);
     }
 
     return {
