@@ -144,7 +144,7 @@ export class GridLocalizationComponent implements OnInit {
     }
   }
 
-  angularGridReady(angularGrid: any) {
+  angularGridReady(angularGrid: AngularGridInstance) {
     this.angularGrid = angularGrid;
   }
 
