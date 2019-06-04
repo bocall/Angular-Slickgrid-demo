@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularGridInstance, Column, FieldType, Formatter, Formatters, GridOption, SelectedRange } from 'angular-slickgrid';
 
 // create my custom Formatter with the Formatter type
+// you can return a string of a object (of type FormatterResultObject), the 2 types are shown below
 const myCustomCheckmarkFormatter: Formatter = (row, cell, value, columnDef, dataContext) => {
-  // you can return a string of a object (of type FormatterResultObject), the 2 types are shown below
   return value ? `<i class="fa fa-fire red" aria-hidden="true"></i>` : { text: '<i class="fa fa-snowflake-o" aria-hidden="true"></i>', addClasses: 'lightblue', toolTip: 'Freezing' };
 };
 
