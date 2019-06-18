@@ -22,6 +22,7 @@ import { GridRowDetailComponent } from './examples/grid-rowdetail.component';
 import { GridRowMoveComponent } from './examples/grid-rowmove.component';
 import { GridRowSelectionComponent } from './examples/grid-rowselection.component';
 import { GridStateComponent } from './examples/grid-state.component';
+import { GridTabsComponent } from './examples/grid-tabs.component';
 import { HomeComponent } from './examples/home.component';
 import { SwtCommonGridTestComponent } from './examples/swt-common-grid-test.component';
 
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'gridgraphql', component: GridGraphqlComponent },
   { path: 'gridmenu', component: GridMenuComponent },
   { path: 'gridstate', component: GridStateComponent },
+  { path: 'gridtabs', component: GridTabsComponent },
   { path: 'draggrouping', component: GridDraggableGroupingComponent },
   { path: 'grouping', component: GridGroupingComponent },
   { path: 'localization', component: GridLocalizationComponent },
@@ -55,7 +57,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingRoutingModule { }

@@ -5,6 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injector, APP_INITIALIZER, NgModule } from '@angular/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -33,6 +34,7 @@ import { GridRowDetailComponent } from './examples/grid-rowdetail.component';
 import { GridRowMoveComponent } from './examples/grid-rowmove.component';
 import { GridRowSelectionComponent } from './examples/grid-rowselection.component';
 import { GridStateComponent } from './examples/grid-state.component';
+import { GridTabsComponent } from './examples/grid-tabs.component';
 import { HomeComponent } from './examples/home.component';
 import { RowDetailPreloadComponent } from './examples/rowdetail-preload.component';
 import { RowDetailViewComponent } from './examples/rowdetail-view.component';
@@ -96,6 +98,7 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
     GridRowMoveComponent,
     GridRowSelectionComponent,
     GridStateComponent,
+    GridTabsComponent,
     RowDetailPreloadComponent,
     RowDetailViewComponent,
     SwtCommonGridTestComponent,
@@ -109,6 +112,7 @@ export function appInitializerFactory(translate: TranslateService, injector: Inj
     FormsModule,
     HttpClientModule,
     NgSelectModule,
+    TabsModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
