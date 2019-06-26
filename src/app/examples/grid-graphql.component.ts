@@ -32,7 +32,7 @@ export class GridGraphqlComponent implements OnInit, OnDestroy {
     <br/>
     <ul class="small">
       <li><span class="red">(*) NO DATA SHOWING</span> - just change Filters &amp; Pages and look at the "GraphQL Query" changing :)</li>
-      <li>Only "Name" field is sortable for the demo (because we use JSON files), however "multiColumnSort: true" is also supported</li>
+      <li>This example also demos the Grid State feature, open the console log to see the changes</li>
       <li>String column also support operator (>, >=, <, <=, <>, !=, =, ==, *)
       <ul>
         <li>The (*) can be used as startsWith (ex.: "abc*" => startsWith "abc") / endsWith (ex.: "*xyz" => endsWith "xyz")</li>
@@ -78,7 +78,7 @@ export class GridGraphqlComponent implements OnInit, OnDestroy {
         filterable: true,
         filter: {
           model: Filters.multipleSelect,
-          collection: [{ value: 'acme', label: 'Acme'}, { value: 'abc', label: 'Company ABC'}, { value: 'xyz', label: 'Company XYZ'}],
+          collection: [{ value: 'acme', label: 'Acme' }, { value: 'abc', label: 'Company ABC' }, { value: 'xyz', label: 'Company XYZ' }],
           filterOptions: {
             filter: true // adds a filter on top of the multi-select dropdown
           }
@@ -92,7 +92,8 @@ export class GridGraphqlComponent implements OnInit, OnDestroy {
         filter: {
           model: Filters.compoundInput
         },
-        formatter: Formatters.multiple, params: { formatters: [Formatters.complexObject, Formatters.translate] } },
+        formatter: Formatters.multiple, params: { formatters: [Formatters.complexObject, Formatters.translate] }
+      },
     ];
 
     this.gridOptions = {
@@ -134,7 +135,7 @@ export class GridGraphqlComponent implements OnInit, OnDestroy {
           { columnId: 'company', searchTerms: ['xyz'], operator: 'IN' }
         ],
         sorters: [
-          // direction can typed as 'asc' (uppercase or lowercase) and/or use the SortDirection type
+          // direction can written as 'asc' (uppercase or lowercase) and/or use the SortDirection type
           { columnId: 'name', direction: 'asc' },
           { columnId: 'company', direction: SortDirection.DESC }
         ],
