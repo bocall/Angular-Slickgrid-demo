@@ -13,7 +13,7 @@ export class GridTabsComponent implements OnInit {
     subTitle = `This example demonstrate the creation of multiple grids in Bootstrap Tabs
    <ol>
     <li>Regular mocked data with javascript</li>
-    <li>Load dataset through Http-Client. Also note we need to call a "resizeGrid()" after focusing on this tab</li>
+    <li>Load dataset through Http-Client. Also note we need to call a "resizeGrid()" after focusing on this tab.</li>
   </ol>`;
 
     angularGrid2: AngularGridInstance;
