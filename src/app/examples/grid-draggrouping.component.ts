@@ -3,14 +3,16 @@ import {
   AngularGridInstance,
   Aggregators,
   Column,
+  DelimiterType,
   FieldType,
+  FileType,
   Filters,
   Formatters,
   GridOption,
   Grouping,
   GroupTotalFormatters,
   SortDirectionNumber,
-  Sorters
+  Sorters,
 } from 'angular-slickgrid';
 
 @Injectable()
@@ -73,9 +75,7 @@ export class GridDraggableGroupingComponent implements OnInit {
         sortable: true,
         grouping: {
           getter: 'title',
-          formatter: (g) => {
-            return `Title:  ${g.value}  <span style="color:green">(${g.count} items)</span>`;
-          },
+          formatter: (g) => `Title: ${g.value}  <span style="color:green">(${g.count} items)</span>`,
           aggregators: [
             new Aggregators.Sum('cost')
           ],
@@ -93,9 +93,7 @@ export class GridDraggableGroupingComponent implements OnInit {
         groupTotalsFormatter: GroupTotalFormatters.sumTotals,
         grouping: {
           getter: 'duration',
-          formatter: (g) => {
-            return `Duration:  ${g.value}  <span style="color:green">(${g.count} items)</span>`;
-          },
+          formatter: (g) => `Duration: ${g.value}  <span style="color:green">(${g.count} items)</span>`,
           comparer: (a, b) => {
             return this.durationOrderByCount ? (a.count - b.count) : Sorters.numeric(a.value, b.value, SortDirectionNumber.asc);
           },
@@ -117,9 +115,7 @@ export class GridDraggableGroupingComponent implements OnInit {
         groupTotalsFormatter: GroupTotalFormatters.avgTotalsPercentage,
         grouping: {
           getter: 'percentComplete',
-          formatter: (g) => {
-            return `% Complete:  ${g.value}  <span style="color:green">(${g.count} items)</span>`;
-          },
+          formatter: (g) => `% Complete:  ${g.value}  <span style="color:green">(${g.count} items)</span>`,
           aggregators: [
             new Aggregators.Sum('cost')
           ],
@@ -139,9 +135,7 @@ export class GridDraggableGroupingComponent implements OnInit {
         exportWithFormatter: true,
         grouping: {
           getter: 'start',
-          formatter: (g) => {
-            return `Start: ${g.value}  <span style="color:green">(${g.count} items)</span>`;
-          },
+          formatter: (g) => `Start: ${g.value}  <span style="color:green">(${g.count} items)</span>`,
           aggregators: [
             new Aggregators.Sum('cost')
           ],
@@ -161,9 +155,7 @@ export class GridDraggableGroupingComponent implements OnInit {
         exportWithFormatter: true,
         grouping: {
           getter: 'finish',
-          formatter: (g) => {
-            return `Finish: ${g.value} <span style="color:green">(${g.count} items)</span>`;
-          },
+          formatter: (g) => `Finish: ${g.value} <span style="color:green">(${g.count} items)</span>`,
           aggregators: [
             new Aggregators.Sum('cost')
           ],
@@ -182,9 +174,7 @@ export class GridDraggableGroupingComponent implements OnInit {
         type: FieldType.number,
         grouping: {
           getter: 'cost',
-          formatter: (g) => {
-            return `Cost: ${g.value} <span style="color:green">(${g.count} items)</span>`;
-          },
+          formatter: (g) => `Cost: ${g.value} <span style="color:green">(${g.count} items)</span>`,
           aggregators: [
             new Aggregators.Sum('cost')
           ],
@@ -205,9 +195,7 @@ export class GridDraggableGroupingComponent implements OnInit {
         formatter: Formatters.checkmark,
         grouping: {
           getter: 'effortDriven',
-          formatter: (g) => {
-            return `Effort-Driven: ${g.value ? 'True' : 'False'} <span style="color:green">(${g.count} items)</span>`;
-          },
+          formatter: (g) => `Effort-Driven: ${g.value ? 'True' : 'False'} <span style="color:green">(${g.count} items)</span>`,
           aggregators: [
             new Aggregators.Sum('cost')
           ],
@@ -296,6 +284,14 @@ export class GridDraggableGroupingComponent implements OnInit {
 
   expandAllGroups() {
     this.dataviewObj.expandAllGroups();
+  }
+
+  exportToCsv(type = 'csv') {
+    this.angularGrid.exportService.exportToFile({
+      delimiter: (type === 'csv') ? DelimiterType.comma : DelimiterType.tab,
+      filename: 'myExport',
+      format: (type === 'csv') ? FileType.csv : FileType.txt
+    });
   }
 
   groupByDuration() {
